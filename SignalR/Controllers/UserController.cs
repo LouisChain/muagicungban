@@ -83,34 +83,6 @@ namespace muagicungban.Controllers
             return Content("Failed");
         }
 
-        [Authorize]
-        public ActionResult Ban(string id)
-        {
-            User member = membersRepository.Members.Single(m => m.Username == id);
-            User user = membersRepository.Members.Single(u => u.Username == HttpContext.User.Identity.Name);
-            if (user.Roles.Any(r => r.Role.RoleName == "Manager" || r.Role.RoleName == "Admin"))
-            {
-                member.IsBan = true;
-                membersRepository.Save(member);
-                return Content("Success");
-            }
-            return Content("Failed");
-        }
-
-        [Authorize]
-        public ActionResult UnBan(string id)
-        {
-            User member = membersRepository.Members.Single(m => m.Username == id);
-            User user = membersRepository.Members.Single(u => u.Username == HttpContext.User.Identity.Name);
-            if (user.Roles.Any(r => r.Role.RoleName == "Manager" || r.Role.RoleName == "Admin"))
-            {
-                member.IsBan = false;
-                membersRepository.Save(member);
-                return Content("Success");
-            }
-            return Content("Failed");
-        }
-
         //
         // GET: /User/Details/5
         [Authorize]
@@ -351,18 +323,26 @@ namespace muagicungban.Controllers
         [HttpPost]
         public ActionResult LogOn(LogOn model, string returnUrl)
         {
+            User member = membersRepository.Members.Single(m => m.Username == model.Username);
             if (ModelState.IsValid)
             {
                 if (!Membership.ValidateUser(model.Username, model.Password))
                     ModelState.AddModelError("", "Thông tin đăng nhập không đúng.!!!");
+                else if (!member.IsActive)
+                {
+                    ModelState.AddModelError("", "Tài khoản đang chờ được kích hoạt, Vui lòng kích hoạt..!!!");
+                }
+                else if (member.IsBan)
+                {
+                    ModelState.AddModelError("", "Tài khoản của bạn đã bị khóa, liên hệ admin để biết thêm.!!!");
+                }                
                 else
                 {
-                    
+
                     FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
-                    User member = membersRepository.Members.Single(m => m.Username == model.Username);
-                    HttpContext.Session.Add("Roles",member.Roles);
+                    HttpContext.Session.Add("Roles", member.Roles);
                     HttpContext.Session.Add("Profile", member);
-                    return Redirect(returnUrl??Url.Action("Index","Item"));
+                    return Redirect(returnUrl ?? Url.Action("Index", "Item"));
                 }
             }
             return View(model);
@@ -379,7 +359,64 @@ namespace muagicungban.Controllers
             return Redirect("http://" + Request.Url.Authority);
         }
 
+        [Authorize]
+        public ActionResult CheckBan(string id, string isban)
+        {
+            User employee = membersRepository.Members.Single(m => m.Username == HttpContext.User.Identity.Name);
+            User user = membersRepository.Members.Single(m => m.Username == id);
+            List<Role> userRoles = new List<Role>();
+            List<Role> employeeRoles = new List<Role>();
 
+            foreach (UserRoles _role in user.Roles)
+            {
+                userRoles.Add(_role.Role);
+            }
+
+            foreach (UserRoles _role in employee.Roles)
+            {
+                employeeRoles.Add(_role.Role);
+            }
+
+            if (userRoles.Any(r => r.RoleName == "Admin")) return Content("");
+            if (userRoles.Any(r => r.RoleName == "Manager") && !employeeRoles.Any(e => e.RoleName == "Admin")) return Content("");
+            if (employeeRoles.Any(r => r.RoleName == "Admin" || r.RoleName == "Manager"))
+            {
+                if (isban != null)
+                {
+                    user.IsBan = true;
+                }
+                else
+                    user.IsBan = false;
+                membersRepository.Save(user);
+            }
+            return Content("");
+        }
+
+        [Authorize]
+        public ActionResult CheckActive(string id)
+        {
+            User employee = membersRepository.Members.Single(m => m.Username == HttpContext.User.Identity.Name);
+            User user = membersRepository.Members.Single(m => m.Username == id);
+            List<Role> userRoles = new List<Role>();
+            List<Role> employeeRoles = new List<Role>();
+            foreach (UserRoles _role in user.Roles)
+            {
+                userRoles.Add(_role.Role);
+            }
+
+            foreach (UserRoles _role in employee.Roles)
+            {
+                employeeRoles.Add(_role.Role);
+            }
+            if (userRoles.Any(r => r.RoleName == "Admin")) return Content("");
+            if (userRoles.Any(r => r.RoleName == "Manager") && !employeeRoles.Any(e => e.RoleName == "Admin")) return Content("");
+            if (employeeRoles.Any(r => r.RoleName == "Admin" || r.RoleName == "Manager"))
+            {
+                user.IsActive = true;
+                membersRepository.Save(user);
+            }
+            return Content("");
+        }
     }
 
 }

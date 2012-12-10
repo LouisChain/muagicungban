@@ -14,7 +14,6 @@
     <AssemblyName>SignalR</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -174,6 +173,10 @@
     <Content Include="Scripts\jquery.signalR-1.0.0-alpha2.js" />
     <Content Include="Scripts\jquery.signalR-1.0.0-alpha2.min.js" />
     <Content Include="Scripts\Timer.js" />
+    <Content Include="Views\Account\AccountSummary.ascx" />
+    <Content Include="Views\Account\Edit.aspx" />
+    <Content Include="Views\Account\Index.aspx" />
+    <Content Include="Views\Account\List.aspx" />
     <Content Include="Views\Category\Category.ascx" />
     <Content Include="Views\Category\Create.aspx" />
     <Content Include="Views\Category\Edit.aspx" />

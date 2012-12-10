@@ -18,6 +18,7 @@ namespace muagicungban
     {
         ItemsRepository itemsRepository = new ItemsRepository(Connection.connectionString);
         OrdersRepository ordersRepository = new OrdersRepository(Connection.connectionString);
+        MembersRepository membersRepository = new MembersRepository(Connection.connectionString);
 
         public static void RegisterRoutes(RouteCollection routes)
         {
@@ -38,8 +39,11 @@ namespace muagicungban
             RegisterRoutes(RouteTable.Routes);
 
             ThreadStart Job = new ThreadStart(CheckWinner);
+            ThreadStart DeleteUnactive = new ThreadStart(DeleteUnactiveUser);
             Thread thread = new Thread(Job);
+            Thread deleteUnactive = new Thread(DeleteUnactive);
             thread.Start();
+            deleteUnactive.Start();
         }
 
         private void CheckWinner()
@@ -67,5 +71,23 @@ namespace muagicungban
                 Thread.Sleep(30000);
             }
         }
+
+        private void DeleteUnactiveUser()
+        {
+            while (true)
+            {
+                var users = membersRepository.Members.Where(m => !m.IsActive);
+                foreach (var user in users)
+                {
+                    if ((DateTime.Now - user.RegisDate).TotalDays >= 3)
+                    {
+                        membersRepository.Delete(user);
+                    }
+                }
+                Thread.Sleep(45000);
+            }
+        }
+
+
     }
 }

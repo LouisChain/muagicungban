@@ -20,7 +20,6 @@ namespace muagicungban.Controllers
         [Authorize]
         public ActionResult Index(string type, string status) // type = buy || type = sell
         {
-            
             List<Order> orders = new List<Order>();
             User user = membersRepository.Members.Single(u => u.Username == HttpContext.User.Identity.Name);
             if (type == "all")
