@@ -80,6 +80,13 @@ namespace muagicungban.Controllers
             return View(items);
         }
 
+        public ActionResult SearchIndex()
+        {
+            List<Item> search = new List<Item>();
+
+            return View(search);
+        }
+
         public ActionResult Category(int id, string type)
         {
             List<Item> items;
