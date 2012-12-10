@@ -1,0 +1,13 @@
+C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\Exercises\SignalR\bin\SignalR.dll
+C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\Exercises\SignalR\bin\SignalR.pdb
+C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\Exercises\SignalR\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\Exercises\SignalR\bin\Microsoft.AspNet.SignalR.Hosting.AspNet.dll
+C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\Exercises\SignalR\bin\Microsoft.AspNet.SignalR.Hosting.Common.dll
+C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\Exercises\SignalR\bin\Newtonsoft.Json.dll
+C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\Exercises\SignalR\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\Exercises\SignalR\bin\Microsoft.AspNet.SignalR.Hosting.AspNet.xml
+C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\Exercises\SignalR\bin\Microsoft.AspNet.SignalR.Hosting.Common.xml
+C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\Exercises\SignalR\bin\Newtonsoft.Json.xml
+C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\Exercises\SignalR\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\Exercises\SignalR\obj\Debug\SignalR.dll
+C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\Exercises\SignalR\obj\Debug\SignalR.pdb

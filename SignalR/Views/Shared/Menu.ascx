@@ -1,0 +1,37 @@
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<dynamic>" %>
+
+<%  var Profile = (muagicungban.Entities.User)ViewContext.HttpContext.Session["Profile"];
+    var Roles = (List<muagicungban.Entities.UserRoles>)ViewContext.HttpContext.Session["Roles"]; %>
+
+<ul class="top-menu dropdown">
+            
+<% if (ViewContext.HttpContext.User.Identity.IsAuthenticated && Roles != null)
+   { %>
+    <% if (Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "Manager"))
+       { %>
+            <li class="first-level"><span><a href="http://<%: Request.Url.Authority %>/user/list?page=1">Người dùng</a></span></li>
+    <% } %>
+            <li class="first-level"><span><a>&nbsp</a></span></li>
+            <li class="first-level" style="color:Black;"><span><a href="http://<%: Request.Url.Authority %>/item/">Sản phẩm</a></span></li>
+            <li class="first-level"><span><a>&nbsp</a></span></li>
+            <li class="first-level"><span><a href="http://<%: Request.Url.Authority %>/order/?type=all">Đơn hàng</a></span></li>
+<% } %>
+</ul>
+
+<div class="float-right" id="sign_io">
+    <ul class="top-menu dropdown">
+
+<% if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
+   { %>
+        <li class="first-level"><span><a><%:Profile.Name.ToString() %> (<%: Profile.Money.ToString("#,### VND") %>)</a></span></li>
+        <li class="first-level"><span>&nbsp;|&nbsp;</span></li>
+        <li class="first-level"><span><a href="http://<%: Request.Url.Authority %>/user/logout">Đăng xuất</a></span></li>
+<% } 
+   else { %>
+        <li class="first-level"><span id="show-login"><a id="sw_login" class="cm-combination" href="http://<%: Request.Url.Authority %>/user/logon" >Đăng nhập</a></span></li>
+        <li class="first-level"><span>&nbsp;|&nbsp;</span></li>
+        <li class="first-level"><span><a href="http://<%: Request.Url.Authority %>/user/Register" rel="nofollow">Đăng ký</a></span></li>
+
+<% } %>
+    </ul>
+</div>
