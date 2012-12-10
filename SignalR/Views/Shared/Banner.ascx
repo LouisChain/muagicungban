@@ -24,7 +24,11 @@
 
 <div class="select_city">
     <form action="http://www.hotdeal.vn/index.php?dispatch=city.change" method="post" id="header-selectcity-form" class="validator">
-    <input type="text" onkeypress="return PerformClick(event, 'btnSearch');" onfocus="if(this.value == '- Nhập từ khóa -') this.value='';" onblur="if(this.value=='') this.value='Nhập từ khóa tìm kiếm...';" value="Nhập từ khóa tìm kiếm..."class="inputbox" / style = "background:no-repeat;padding:10px 96px 13px 10px;border:none;width:350px; background-color:#FFF">
+    <input type="text" onkeypress="return PerformClick(event, 'btnSearch');" 
+            onfocus="if(this.value == 'Nhập từ khóa tìm kiếm...') this.value='';" 
+            onblur="if(this.value=='') this.value='Nhập từ khóa tìm kiếm...';" 
+            value="Nhập từ khóa tìm kiếm..."class="inputbox" / 
+            style = "background:no-repeat;padding:10px 96px 13px 10px;border:none;width:350px; background-color:#FFF">
     <select style="padding:10px 10px 10px;width:150px; background-color:#FFF; left:610">
       <option>Tất cả các loại</option>
       <option>Đồ điện tử</option>
