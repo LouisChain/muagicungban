@@ -73,6 +73,8 @@ namespace muagicungban.Repositories
             {
                 showingDate = DateTime.Now;
             }
+            if (showingDate <= DateTime.Now)
+                showingDate = DateTime.Now;
             return showingDate;
         }
 

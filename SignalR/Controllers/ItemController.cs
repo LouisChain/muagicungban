@@ -332,7 +332,7 @@ namespace muagicungban.Controllers
                 long ItemID = shipment.ItemID;
                 shipmentRepository.Delete(shipment);
                 TempData["message"] = shipment.AreaPart.CountryArea.Country.Name + " - " + shipment.AreaPart.CountryArea.AreaName +
-                                        " - " + shipment.AreaPart.Name + " <b>deleted</b> successfully..!";
+                                        " - " + shipment.AreaPart.Name + " <b>Xóa</b> thành công..!";
                 return RedirectToAction("ShippingSupport", new { ItemId = ItemID });
             }
             return RedirectToAction("Index");
@@ -345,7 +345,7 @@ namespace muagicungban.Controllers
             List<ShipCountryArea> areas = new DataContext(Connection.connectionString)
                                                 .GetTable<ShipCountryArea>()
                                                 .Where(a => a.ShipCountryID == int.Parse(CountryID)).ToList();
-            string result = "<option selected=\"selected\">Select Area</option>";
+            string result = "<option selected=\"selected\">Chọn tỉnh/thành</option>";
             foreach (var item in areas)
             {
                 result += "<option value=" + item.AreaID + " >" + item.AreaName + "</option>";

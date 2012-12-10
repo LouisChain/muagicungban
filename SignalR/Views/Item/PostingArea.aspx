@@ -28,7 +28,7 @@
                 <div class="margin">
                     <div class="content-helper clear">
                         <div class="central-column">
-                            <div class="mainbox-container">
+                            <div>
                                 <div class="mainbox-body">
                                     <div class="central-content">
                                         <div class="box_product_detail">

@@ -10,7 +10,7 @@
                 <div class="margin">
                     <div class="content-helper clear">
                         <div class="central-column">
-                            <div class="mainbox-container">
+                            <div>
                                 <div class="mainbox-body">
                                     <div class="central-content">
                                         <div class="box_product_detail">
@@ -64,7 +64,7 @@
                                                             <%: shipment.Description%>
                                                         </td>
                                                         <td align="center">
-                                                            <%: Html.ActionLink("Del", "ShippingSupportDelete", new { id = shipment.ShipmentID })%>
+                                                            <%: Html.ActionLink("Xóa", "ShippingSupportDelete", new { id = shipment.ShipmentID })%>
                                                         </td>
                                                     </tr>
                                                     <% } %>
@@ -102,9 +102,9 @@
                                                         <td>
                                                             <input type="text" name="Description" />
                                                         </td>
-                                                        <td>
+                                                        <td align="center">
                                                             <input type="hidden" name="ItemID" value="<%: ViewData["ItemID"] %>" />
-                                                            <input type="submit" value="Add" />
+                                                            <input type="submit" value="Thêm" />
                                                         </td>
                                                         </form>
                                                     </tr>

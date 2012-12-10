@@ -27,3 +27,19 @@ C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\muagicungban\Sign
 C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\muagicungban\SignalR\bin\System.Data.Linq.dll
 C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\muagicungban\SignalR\bin\System.Web.Mvc.dll
 C:\Users\chunghien-admin\Documents\Visual Studio 2010\Projects\muagicungban\SignalR\bin\System.Web.Mvc.xml
+H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\bin\SignalR.dll
+H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\bin\SignalR.pdb
+H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\bin\Microsoft.AspNet.SignalR.Core.dll
+H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\bin\Microsoft.AspNet.SignalR.Hosting.AspNet.dll
+H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\bin\Microsoft.AspNet.SignalR.Hosting.Common.dll
+H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\bin\Newtonsoft.Json.dll
+H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\bin\System.Data.Linq.dll
+H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\bin\System.Web.Mvc.dll
+H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\bin\Microsoft.AspNet.SignalR.Core.xml
+H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\bin\Microsoft.AspNet.SignalR.Hosting.AspNet.xml
+H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\bin\Microsoft.AspNet.SignalR.Hosting.Common.xml
+H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\bin\Newtonsoft.Json.xml
+H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\bin\System.Web.Mvc.xml
+H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\obj\Debug\ResolveAssemblyReference.cache
+H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\obj\Debug\SignalR.dll
+H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\obj\Debug\SignalR.pdb
