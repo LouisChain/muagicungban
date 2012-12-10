@@ -254,6 +254,7 @@ namespace muagicungban.Controllers
                 item.MaxPrice = model.MaxPrice;
                 item.StartDate = model.StartDate;
                 item.EndDate = model.EndDate;
+                item.CreateDate = DateTime.Now;
                 if (item.IsAuction)
                 {
                     item.StartPrice = model.StartPrice;
@@ -457,6 +458,7 @@ namespace muagicungban.Controllers
         public ActionResult AcceptPayment(long id)
         {
             List<ItemPlace> _itemPlaces = itemPlaces.ItemPlaces.Where(i => i.ItemID == id).ToList();
+            Item _item = itemsRepository.Items.Single(i => i.ItemID == id);
             User user = membersRepository.Members.Single(u => u.Username == HttpContext.User.Identity.Name);
             decimal totalPrice = 0;
             foreach (var item in _itemPlaces)
@@ -469,6 +471,7 @@ namespace muagicungban.Controllers
             }
             if (user.Money >= totalPrice)
             {
+                decimal money = user.Money;
                 foreach (var item in _itemPlaces)
                 {
                     var _itemPlace = itemPlaces.ItemPlaces.Single(i => i.ItemPlaceID == item.ItemPlaceID);
@@ -476,11 +479,15 @@ namespace muagicungban.Controllers
                     decimal pricePerDay = showablePlaces.ShowablePlaces.Single(s => s.PlaceName == item.PlaceName).PricePerDay;
                     double showDays = (_itemPlace.EndDate - _itemPlace.StartDate).TotalDays;
                     decimal price = pricePerDay * (decimal)showDays;
-                    user.Money -= price;
+                    money -= price;
                     _itemPlace.PaidMoney = price;
                     _itemPlace.IsPaid = true;
+                    _item.IsActive = true;
+                    itemsRepository.Save(_item);
                     itemPlaces.Save(_itemPlace);
+                    user.Money = money;
                     membersRepository.Save(user);
+                    HttpContext.Session["Profile"] = user;
                 }
             }
             else

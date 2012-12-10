@@ -82,6 +82,9 @@ namespace muagicungban.Entities
         [Column(Name = "IsChecked", CanBeNull = true)]
         public bool IsChecked { get; set; }
 
+        [Column(Name = "CreateDate")]
+        public DateTime CreateDate { get; set; }
+
         [System.Data.Linq.Mapping.Association(OtherKey = "ItemID")]
         EntitySet<Bid> _bids = new EntitySet<Bid>();
         public IList<Bid> Bids { get { return _bids.ToList(); } }

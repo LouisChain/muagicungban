@@ -65,7 +65,7 @@
         <% } %>
 		</div>
 		<div class="product_timeout">
-			<span class="title">Remaining time</span><br />
+			<span class="title">Thời gian còn lại</span><br />
             
 			<div class="key" id="timer<%: Model.ItemID %>">
                 <% if (Model.StartDate > DateTime.Now)

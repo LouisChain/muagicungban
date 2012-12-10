@@ -19,6 +19,7 @@ namespace muagicungban
         ItemsRepository itemsRepository = new ItemsRepository(Connection.connectionString);
         OrdersRepository ordersRepository = new OrdersRepository(Connection.connectionString);
         MembersRepository membersRepository = new MembersRepository(Connection.connectionString);
+        ItemPlaceRepository itemPlaceRepository = new ItemPlaceRepository(Connection.connectionString);
 
         public static void RegisterRoutes(RouteCollection routes)
         {
@@ -68,15 +69,17 @@ namespace muagicungban
                     _item.IsSold = true;
                     itemsRepository.Save(_item);
                 }
+                DeleteUnpaidItem();
                 Thread.Sleep(30000);
             }
         }
 
         private void DeleteUnactiveUser()
         {
+            Thread.Sleep(10000);
             while (true)
             {
-                var users = membersRepository.Members.Where(m => !m.IsActive);
+                var users = membersRepository.Members.Where(m => !m.IsActive).ToList();
                 foreach (var user in users)
                 {
                     if ((DateTime.Now - user.RegisDate).TotalDays >= 3)
@@ -88,6 +91,17 @@ namespace muagicungban
             }
         }
 
-
+        private void DeleteUnpaidItem()
+        {
+                var items = itemsRepository.Items.Where(m => !m.IsActive).ToList();
+                foreach (var item in items)
+                {
+                    if ((DateTime.Now - item.CreateDate).TotalDays >= 3)
+                    {
+                        itemsRepository.Delete(item);
+                        itemPlaceRepository.DeleteAll(itemPlaceRepository.ItemPlaces.Where(i => i.ItemID == item.ItemID).ToList());
+                    }
+                }
+        }
     }
 }
