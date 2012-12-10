@@ -871,7 +871,7 @@ a.cm-thumbnails-mini img{padding:0;border:0 none}
 .register_email .button{color:#cc0000;padding:5px 10px;font-weight:bold;background:none;padding:0;-webkit-box-shadow:0;-moz-box-shadow:0;box-shadow:0;border-radius:0;-moz-border-radius:0;-webkit-border-radius:0;border:none;margin:0;width:52px;height:34px;float:right}
 .register_email .input-wrapper{background:no-repeat top left}
 #welcome-subscription #subscr_email_welcome{border:1px solid #AAA;padding:8px}
-.select_city{color:#fff;line-height:24px;position:absolute;top:20px;left:260px;z-index:99}
+.select_city{color:#fff;line-height:24px;position:absolute;top:35px;left:260px;z-index:99}
 .select_city .selectbox{background:no-repeat;padding:10px 57px 10px 4px;border:none;width:108px}
 .welcome-inner .select_city .selectbox{background:no-repeat}
 .select_city .selectbox-wrapper{background:#DDEDCC;width:166px !important;display:block;border-left:1px solid #DDD;border-right:1px solid #DDD}
