@@ -106,7 +106,6 @@
                                                             </div>
                                                             <div class="editor-field">
                                                                 <%: Html.TextBoxFor(model => model.StartPrice)%>
-                                                                <%: Html.ValidationMessageFor(model => model.StartPrice)%>
                                                             </div>
                                                         </div>
                                                     </div>
