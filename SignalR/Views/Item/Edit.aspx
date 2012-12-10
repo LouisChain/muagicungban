@@ -41,7 +41,7 @@
                 <div class="margin">
                     <div class="content-helper clear">
                         <div class="central-column">
-                            <div class="mainbox-container">
+                            <div>
                                 <div class="mainbox-body">
                                     <div class="central-content">
                                         <div class="box_product_detail">
@@ -76,7 +76,7 @@
                                                         Chỉ bán
                                                         <%: Html.ValidationMessageFor(model => model.IsAuction) %>
                                                     </div>
-                                                    <div style = "position: absolute;float: right;top: 53px;left: 55%;">
+                                                    <div>
                                                     <div class="editor-label" style="padding-top:15px; padding-bottom:15px;font-weight:bolder;">
                                                         Thông tin giá cả
                                                     </div>
