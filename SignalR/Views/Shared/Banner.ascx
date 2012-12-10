@@ -4,28 +4,43 @@
         <img src="http://www.hotdeal.vn/skins/hotdeal/customer/images/logo-hotdeal.png" width="182" height="74"
             border="0" alt="HotDeal.vn: Mua hàng theo nhóm, cùng mua chung để có giá ưu đãi"></a>
 </div>
-<div class="select_city">
+<%--<div class="select_city">
     <span>Chọn thành phố</span>
     <form action="/index.php?dispatch=city.change" method="post" id="header-selectcity-form"
     class="validator">
     <input id="_input" type="text" class="selectbox" autocomplete="off" readonly="" tabindex="0"><div
         id="_container" class="selectbox-wrapper" style="display: none; width: 108px;">
         <ul>
-            <li id="_input_440">Hà Nội</li><li id="_input_437" class="selected">Hồ Chí Minh</li></ul>
+            <li id="_input_440">Hà Nội</li>
+            <li id="_input_437" class="selected">Hồ Chí Minh</li>
+        </ul>
     </div>
     <select name="city_id" class="cSelect" style="display: none;">
         <option value="440">Hà Nội</option>
         <option value="437" selected="selected">Hồ Chí Minh</option>
     </select>
     </form>
+</div>--%>
+
+<div class="select_city">
+    <form action="http://www.hotdeal.vn/index.php?dispatch=city.change" method="post" id="header-selectcity-form" class="validator">
+    <input type="text" class="inputbox" value="Nhap tu khoa tim kiem..."/ style = "background:no-repeat;padding:10px 57px 10px 4px;border:none;width:350px; background-color:#FFF">
+    <select style="padding:10px;width:150px; background-color:#FFF; left:610">
+      <option>tat ca cac loai</option>
+      <option>b</option>
+      <option>c</option>
+	</select>
+    <button style="padding: 10px; width:100px; background-color:#FFF">Tim kiem</button>
+    </form>
 </div>
+
 <script type="text/javascript">
     $('.cSelect').selectbox();
     $('.cSelect').change(function () {
         $("#header-selectcity-form").submit();
     });
 </script>
-<div class="register_email">
+<%--<div class="register_email">
     <form action="/ho-chi-minh/" method="post" name="subscribe_form_footer">
     <input type="hidden" name="redirect_url" value="index.php">
     <input type="hidden" name="newsletter_format" value="2">
@@ -38,4 +53,4 @@
             value="Nhập địa chỉ email" class="inputbox cm-hint"><input type="submit" class="button"
                 value="Gửi"></div>
     </form>
-</div>
+</div>--%>
