@@ -52,7 +52,8 @@ namespace muagicungban.Controllers
                 {
                     ItemPlace _itemplace = itemPlaces.ItemPlaces.Where(p => p.PlaceName == "index1" && p.IsPaid && p.StartDate <= DateTime.Now && DateTime.Now < p.EndDate).First();
                     Item _item = itemsRepository.Items.Where(i => i.ItemID == _itemplace.ItemID).Single();
-                    items.Add(_item);
+                    if (_item.IsActive && _item.IsChecked)
+                        items.Add(_item);
                 }
             }
 
@@ -62,7 +63,7 @@ namespace muagicungban.Controllers
                 foreach (var item in _itemPlaces)
                 {
                     Item _item = itemsRepository.Items.Where(i => i.ItemID == item.ItemID).Single();
-                    if (!items.Any(x => x.ItemID == _item.ItemID))
+                    if (_item.IsActive && _item.IsChecked && !items.Any(x => x.ItemID == _item.ItemID))
                         items.Add(_item);
                 }
             }
@@ -72,7 +73,7 @@ namespace muagicungban.Controllers
                 foreach (var item in _itemPlaces)
                 {
                     Item _item = itemsRepository.Items.Where(i => i.ItemID == item.ItemID).Single();
-                    if (!items.Any(x => x.ItemID == _item.ItemID))
+                    if (_item.IsActive && _item.IsChecked &&  !items.Any(x => x.ItemID == _item.ItemID))
                         items.Add(_item);
                 }
             }
