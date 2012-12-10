@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<dynamic>" %>
 <div class="logo-image">
     <a href="http://<%: Request.Url.Authority %>/">
-        <img src="http://www.hotdeal.vn/skins/hotdeal/customer/images/logo-hotdeal.png" width="182" height="74"
-            border="0" alt="HotDeal.vn: Mua hàng theo nhóm, cùng mua chung để có giá ưu đãi"></a>
+        <img src="http://www.hotdeal.vn/skins/hotdeal/customer/images/logo-hotdeal.png" width="182" height="74" 
+        border="0" alt="HotDeal.vn: Mua hàng theo nhóm, cùng mua chung để có giá ưu đãi"></a>
 </div>
 <%--<div class="select_city">
     <span>Chọn thành phố</span>
@@ -24,15 +24,19 @@
 
 <div class="select_city">
     <form action="http://www.hotdeal.vn/index.php?dispatch=city.change" method="post" id="header-selectcity-form" class="validator">
-    <input type="text" class="inputbox" value="Nhap tu khoa tim kiem..."/ style = "background:no-repeat;padding:10px 57px 10px 4px;border:none;width:350px; background-color:#FFF">
-    <select style="padding:10px;width:150px; background-color:#FFF; left:610">
-      <option>tat ca cac loai</option>
-      <option>b</option>
-      <option>c</option>
+    <input type="text" onkeypress="return PerformClick(event, 'btnSearch');" onfocus="if(this.value == '- Nhập từ khóa -') this.value='';" onblur="if(this.value=='') this.value='Nhập từ khóa tìm kiếm...';" value="Nhập từ khóa tìm kiếm..."class="inputbox" / style = "background:no-repeat;padding:10px 96px 13px 10px;border:none;width:350px; background-color:#FFF">
+    <select style="padding:10px 10px 10px;width:150px; background-color:#FFF; left:610">
+      <option>Tất cả các loại</option>
+      <option>Đồ điện tử</option>
+      <option>Hàng tiêu dùng</option>
+      <option>anything</option>
 	</select>
-    <button style="padding: 10px; width:100px; background-color:#FFF">Tim kiem</button>
+    <button style="padding: 7px 10px 13px; width:100px; background-color:#FFF">Tìm kiếm</button>
     </form>
 </div>
+
+
+
 
 <script type="text/javascript">
     $('.cSelect').selectbox();
