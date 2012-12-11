@@ -608,6 +608,46 @@ namespace muagicungban.Controllers
             return File(item.ImageData, item.ImageMimeType);
         }
 
+        //
+        // ITEM SESSION
+        [Authorize]
+        public ActionResult Session(string id)
+        {
+            User user = membersRepository.Members.Single(m => m.Username == HttpContext.User.Identity.Name);
+            List<Item> items = new List<Item>();
+            int count = 0;
+            if (id == "win")
+            {
+                var _list = itemsRepository.Items.Where(i => i.EndDate < DateTime.Now);
+                foreach( var item in _list)
+                {
+                    if (item.CurUser == user.Username)
+                    {
+                        items.Add(item);
+                        count++;
+                    }
+                }
+                //Update showing number of win items
+                HttpContext.Session["Win"] = count;
+            }
+            count = 0;
+            if (id == "join")
+            {
+                foreach (var item in itemsRepository.Items)
+                {
+                    if (item.Bids.Any(b => b.BidderID == user.Username))
+                    {
+                        items.Add(item);
+                        count++;
+                    }
+                }
+                //Update showing number of join items
+                HttpContext.Session["Join"] = count;
+            }
+            return View("index",items);
+        }
 
+        //[Authorize]
+        //public ActionResult Checking(string id)
     }
 }

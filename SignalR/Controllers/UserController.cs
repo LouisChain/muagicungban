@@ -20,12 +20,14 @@ namespace muagicungban.Controllers
         private IMemberRepository membersRepository;
         private UserRolesRepository userRolesRepository;
         private RolesRepository rolesRepository;
+        private ItemsRepository itemsRepository;
 
         public UserController()
         {
             membersRepository = new MembersRepository(Connection.connectionString);
             userRolesRepository = new UserRolesRepository(Connection.connectionString);
             rolesRepository = new RolesRepository(Connection.connectionString);
+            itemsRepository = new ItemsRepository(Connection.connectionString);
         }
         //
         // GET: /User/
@@ -342,6 +344,27 @@ namespace muagicungban.Controllers
                     FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
                     HttpContext.Session.Add("Roles", member.Roles);
                     HttpContext.Session.Add("Profile", member);
+
+                    // For showing number of win items
+                    int i = 0;
+                    foreach (var item in itemsRepository.Items.Where(a => a.EndDate < DateTime.Now))
+                        if (item.CurUser == model.Username)
+                            i++;
+                    HttpContext.Session.Add("Win", i);
+
+                    // For showing number of join items
+                    i = 0;
+                    foreach (var item in itemsRepository.Items)
+                        if (item.Bids.Any(b => b.BidderID == model.Username))
+                            i++;
+                    HttpContext.Session.Add("Join", i);
+
+                    // For showing number of uncheck item
+                    i = 0;
+                    foreach (var item in itemsRepository.Items.Where(a => a.IsChecked == false))
+                        i++;
+                    HttpContext.Session.Add("Uncheck", i);
+
                     return Redirect(returnUrl ?? Url.Action("Index", "Item"));
                 }
             }

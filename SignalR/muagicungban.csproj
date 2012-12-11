@@ -195,6 +195,7 @@
     <Content Include="Views\Item\List.aspx" />
     <Content Include="Views\Item\PaymentSuccess.aspx" />
     <Content Include="Views\Item\PostingArea.aspx" />
+    <Content Include="Views\Item\Session.aspx" />
     <Content Include="Views\Item\ShippingSupport.aspx" />
     <Content Include="Views\Item\ViewShipping_partial.ascx" />
     <Content Include="Views\Order\Detail.aspx" />

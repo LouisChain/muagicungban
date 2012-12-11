@@ -76,6 +76,7 @@
         <div class="margin">
             <div class="content-helper clear">
                 <div class="central-column">
+                <% Html.RenderPartial("ItemMenu"); %>
                     <div class="central-content">
                         <% var top1 = Model.First();
                            Html.RenderPartial("Item_Top1", top1); %>
