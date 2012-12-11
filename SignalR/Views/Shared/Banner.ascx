@@ -30,10 +30,34 @@
             value="Nhập từ khóa tìm kiếm..."class="inputbox" / 
             style = "background:no-repeat;padding:10px 96px 13px 10px;border:none;width:350px; background-color:#FFF">
     <select name="catagory" style="padding:10px 10px 10px;width:150px; background-color:#FFF; left:610">
-      <option>Tất cả các loại</option>
-      <option>Đồ điện tử</option>
-      <option>Hàng tiêu dùng</option>
-      <option>anything</option>
+        <option>Tất cả các loại</option>
+        <option>Đồng hồ, trang sức</option>
+        <option>Đồ cổ</option>
+        <option>Đồ chơi, sở thích</option>
+        <option>Sách, văn hóa phẩm và nghệ thuật</option>
+        <option>Thiết bị âm thanh</option>
+        <option>Nhạc cụ</option>
+        <option>Đồ điện tử</option>
+        <option>Đồ trẻ em</option>
+        <option>Sách</option>
+        <option>Tem</option>
+        <option>Công nghiệp</option>
+        <option>Máy ảnh, quay phim, phụ kiện</option>
+        <option>Điện thoại di động, IPAD, PDA</option>
+        <option>Giày dép, quần áo, phụ kiện</option>
+        <option>tiền xu và tiền giấy</option>
+        <option>Bộ sưu tập</option>
+        <option>Máy tính, mạng</option>
+        <option>Thủ công mỹ nghệ</option>
+        <option>Búp bê, gấu bông</option>
+        <option>Đĩa DVD và phim</option>
+        <option>Đồ chăm sóc thú cưng</option>
+        <option>Đồ gốm sứ, thủy tinh</option>
+        <option>Đồ thể thao</option>
+        <option>Sự kiện thể thao và đồ cổ động</option>
+        <option>Du lịch</option>
+        <option>Trò chơi video</option>
+        <option>Sự kiện giải trí</option>
 	</select>
     <button onclick="submit" style="padding: 7px 10px 13px; width:100px; background-color:#FFF">Tìm kiếm</button>
     </form>
