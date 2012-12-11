@@ -83,11 +83,44 @@ namespace muagicungban.Controllers
             return View(items);
         }
 
-        public ActionResult SearchIndex()
+        public ActionResult SearchIndex(string key, string catagory)
         {
-            List<Item> search = new List<Item>();
+            List<Item> items = new List<Item>();
+            if (itemPlaces.ItemPlaces.Any(i => i.PlaceName == "index1"))
+            {
+                if (itemPlaces.ItemPlaces.Any(p => p.PlaceName == "index1" && p.StartDate <= DateTime.Now && DateTime.Now < p.EndDate))
+                {
+                    ItemPlace _itemplace = itemPlaces.ItemPlaces.Where(p => p.PlaceName == "index1" && p.IsPaid && p.StartDate <= DateTime.Now && DateTime.Now < p.EndDate).First();
+                    Item _item = itemsRepository.Items.Single(i => i.ItemID == _itemplace.ItemID);
+                    if (_item.IsActive && _item.IsChecked)
+                        items.Add(_item);
+                }
+            }
 
-            return View(search);
+            if (itemPlaces.ItemPlaces.Any(i => i.PlaceName == "index10"))
+            {
+                List<ItemPlace> _itemPlaces = itemPlaces.ItemPlaces.Where(p => p.PlaceName == "index10" && p.StartDate <= DateTime.Now && DateTime.Now < p.EndDate).ToList();
+                foreach (var item in _itemPlaces)
+                {
+                    Item _item = itemsRepository.Items.First(i => i.ItemID == item.ItemID);
+                    if (_item.IsChecked && _item.IsActive && _item.Title.ToLower().Contains(key.ToLower()))
+                        if (!items.Any(x => x.ItemID == _item.ItemID))
+                            items.Add(_item);
+                }
+            }
+            if (itemPlaces.ItemPlaces.Any(i => i.PlaceName == "index100"))
+            {
+                List<ItemPlace> _itemPlaces = itemPlaces.ItemPlaces.Where(p => p.PlaceName == "index100" && p.IsPaid && p.EndDate >= DateTime.Now && p.StartDate <= DateTime.Now).ToList();
+                foreach (var item in _itemPlaces)
+                {
+                    Item _item = itemsRepository.Items.First(i => i.ItemID == item.ItemID);
+                    if (_item.IsChecked && _item.IsActive && _item.Title.ToLower().Contains(key.ToLower()))
+                        if (!items.Any(x => x.ItemID == _item.ItemID))
+                            items.Add(_item);
+                }
+            }
+
+            return View(items);
         }
 
         public ActionResult Category(int id, string type)
