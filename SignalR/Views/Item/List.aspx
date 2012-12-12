@@ -14,48 +14,50 @@
                         <div class="mainbox-container">
                             <div class="mainbox-body">
                                 <div id="content_general">
-                                    <table>
-                                        <tr>
-                                            <th>
-                                                Title
+                                    <table width="100%">
+                                        <tr style="height:30px;background-color:Black;color:White;text-align:center;">
+                                            <th style="width:15%;">
+                                                Tên sản phẩm
                                             </th>
                                             <%--1--%>
-                                            <th>
-                                                Image
+                                            <th style="width:15%;">
+                                                Hình ảnh
                                             </th>
                                             <%--2--%>
-                                            <th>
-                                                Description
+                                            <th style="width:25%;">
+                                               Mô tả
                                             </th>
                                             <%--3--%>
-                                            <th>
-                                                Category
+                                            <th style="width:10%;">
+                                                Danh mục
                                             </th>
                                             <%--4--%>
                                             <th>
-                                                Selling method
+                                                Cách bán
                                             </th>
                                             <%--5--%>
                                             <th>
-                                                Price
+                                                Giá tối đa
                                             </th>
                                             <%--6--%>
                                             <th>
-                                                IsActive
+                                                Kích hoạt
                                             </th>
                                             <%--7--%>
                                             <th>
-                                                IsSold
+                                                Đã bán
                                             </th>
                                             <%--8--%>
                                             <th>
-                                                IsChecked
+                                                Đã kiểm duyệt
                                             </th>
                                             <%--9--%>
                                         </tr>
-                                        <% foreach (var item in Model)
-                                           { %>
-                                        <tr>
+                                        <% int j = 0;
+                                            foreach (var item in Model)
+                                            {
+                                                ++j;%>
+                                        <tr <% if(j % 2 == 0) { %>style="background-color:#DDD7D7;"<% } %>>
                                             <td>
                                                 <%--1--%>
                                                 <% if (Roles != null && Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "manager"))
@@ -80,39 +82,40 @@
                                             </td>
                                             <td>
                                                 <%--4--%>
+                                                <%: item.SubCategory.Name %>
                                             </td>
                                             <td>
                                                 <%--5--%>
                                                 <% if (item.IsAuction)
-                                                   { %>Auction
+                                                   { %>Đấu giá
                                                 <% }
                                                    else
-                                                   { %>Sell<% } %>
+                                                   { %>Chỉ bán<% } %>
                                             </td>
                                             <td>
                                                 <%--6--%>
-                                                <%: item.MaxPrice%>
+                                                <%: item.MaxPrice.ToString("#,### VND") %>
                                             </td>
                                             <td align="center">
                                                 <%--7--%>
                                                 <% if (item.IsActive)
-                                                   { %>Yes<% }
+                                                   { %>OK<% }
                                                    else
-                                                   { %>No<% } %>
+                                                   { %>Chưa<% } %>
                                             </td>
                                             <td align="center">
                                                 <%--8--%>
                                                 <% if (item.IsSold)
-                                                   { %>Yes<% }
+                                                   { %>OK<% }
                                                    else
-                                                   { %>No<% } %>
+                                                   { %>Chưa<% } %>
                                             </td>
                                             <td align="center">
                                                 <%--9--%>
                                                 <% if (item.IsChecked)
-                                                   { %>Yes<% }
+                                                   { %>OK<% }
                                                    else
-                                                   { %>No<% } %>
+                                                   { %>Chưa<% } %>
                                             </td>
                                         </tr>
                                         <% } %>

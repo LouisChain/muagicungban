@@ -97,6 +97,10 @@ namespace muagicungban.Entities
         EntitySet<ItemPlace> _itemPlaces = new EntitySet<ItemPlace>();
         public IList<ItemPlace> ItemPlaces { get { return _itemPlaces.ToList(); } }
 
+        EntityRef<muagicungban.Models.SubCategory> _subCategory;
+        [System.Data.Linq.Mapping.Association(OtherKey = "ID", ThisKey = "SubCategoryID", Storage = "_subCategory")]
+        public muagicungban.Models.SubCategory SubCategory { get { return _subCategory.Entity; } }
+
         public decimal CurPrice
         {
             get

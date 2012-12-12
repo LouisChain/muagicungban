@@ -49,7 +49,8 @@
             // Call the chat method on the server
             // alert("OK");
             //alert(Number(currentPrice<%: Model.ItemID %>.innerHTML));
-            player.server.placebid(<%: Model.ItemID %>, Number(currentPrice<%: Model.ItemID %>.innerHTML) + Number(increasePrice<%: Model.ItemID %>.value));
+            if (confirm("Chắc chứ!!!"))
+                player.server.placebid(<%: Model.ItemID %>, Number(currentPrice<%: Model.ItemID %>.innerHTML) + Number(increasePrice<%: Model.ItemID %>.value));
             //alert(<%: Model.ItemID %> + " " + Number(current-price<%: Model.ItemID %>.innerHTML) + " " + Number(increasePrice<%: Model.ItemID %>.value);
         });
        

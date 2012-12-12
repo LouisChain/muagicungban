@@ -13,7 +13,7 @@ namespace muagicungban.Controllers
 {
     public class ItemController : Controller
     {
-        public const int pageSize = 5;
+        public const int pageSize = 20;
 
         private ItemsRepository itemsRepository;
         private ImagesRepository imagesRepository;
@@ -38,6 +38,17 @@ namespace muagicungban.Controllers
             membersRepository = new MembersRepository(Connection.connectionString);
             subCategoriesRepository = new SubCategoriesRepository(Connection.connectionString);
             watchLists = new WatchListRepository(Connection.connectionString);
+            ViewData["categories"] = subCategoriesRepository.subCategories.ToList();
+
+            // For showing number of uncheck item
+            int i = 0;
+            foreach (var item in itemsRepository.Items.Where(a => a.IsChecked == false))
+                i++;
+            ViewData["Uncheck"] = i;
+
+            // For showing number of item list
+            ViewData["List"] = itemsRepository.Items.Count();
+            
         }
 
         //
@@ -242,31 +253,31 @@ namespace muagicungban.Controllers
         }
 
         [Authorize]
-        public ActionResult Check(long id)
+        public ActionResult Check(long id, string check)
         {
             User user = membersRepository.Members.Single(m => m.Username == HttpContext.User.Identity.Name);
             if (user.Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "Manager"))
             {
                 Item item = itemsRepository.Items.Single(i => i.ItemID == id);
-                item.IsChecked = true;
+                item.IsChecked = (check != null) ? true : false;
                 itemsRepository.Save(item);
-                return Content("Đã cập nhật");
+                return Content("OK");
             }
-            return Content("Cập nhật thất bại");
+            return Content("Thất bại");
         }
 
         [Authorize]
-        public ActionResult Active(long id)
+        public ActionResult Active(long id, string active)
         {
             User user = membersRepository.Members.Single(m => m.Username == HttpContext.User.Identity.Name);
             if (user.Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "Manager"))
             {
                 Item item = itemsRepository.Items.Single(i => i.ItemID == id);
-                item.IsActive = true;
+                item.IsActive = (active != null) ? true : false;
                 itemsRepository.Save(item);
-                return Content("Đã kích hoạt");
+                return Content("OK");
             }
-            return Content("Kích hoạt thất bại");
+            return Content("Thất bại");
         }
 
         //
@@ -488,7 +499,7 @@ namespace muagicungban.Controllers
             string placeName = collection["del_placename"];
             long ItemID = long.Parse(collection["del_itemid"]);
             itemPlaces.DeleteAll(itemPlaces.ItemPlaces.Where(i => i.ItemID == ItemID && i.PlaceName == placeName).ToList());
-            return Content("Success");
+            return Content("OK");
         }
 
         [Authorize]
@@ -739,9 +750,9 @@ namespace muagicungban.Controllers
             {
                 item.SubCategoryID = categoryID;
                 itemsRepository.Save(item);
-                return Content("Đã cập nhật");
+                return Content("OK");
             }
-            return Content("Cập nhật thất bại");
+            return Content("Thất bại");
         }
 
     }

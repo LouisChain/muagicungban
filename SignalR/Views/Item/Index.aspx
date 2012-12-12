@@ -49,8 +49,8 @@
             // alert(Number(currentPrice[<%: m.ItemID %>].innerHTML)+ 1000 ); //[RUN]
 
             // player.server.send(Number(currentPrice[<%: m.ItemID %>].innerHTML));
-
-            player.server.placebid(<%: m.ItemID %>, Number(currentPrice[<%: m.ItemID %>].innerHTML) + Number(increasePrice[<%: m.ItemID %>].value));
+            if (confirm("Chắc chứ!"))
+                player.server.placebid(<%: m.ItemID %>, Number(currentPrice[<%: m.ItemID %>].innerHTML) + Number(increasePrice[<%: m.ItemID %>].value));
 
             // alert("OK");
             // player.server.PlaceBid(<%: m.ItemID %>, Number($('#current-price').val() + 1));

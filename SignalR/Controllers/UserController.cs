@@ -359,12 +359,6 @@ namespace muagicungban.Controllers
                             i++;
                     HttpContext.Session.Add("Join", i);
 
-                    // For showing number of uncheck item
-                    i = 0;
-                    foreach (var item in itemsRepository.Items.Where(a => a.IsChecked == false))
-                        i++;
-                    HttpContext.Session.Add("Uncheck", i);
-
                     return Redirect(returnUrl ?? Url.Action("Index", "Item"));
                 }
             }
