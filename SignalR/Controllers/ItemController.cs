@@ -175,34 +175,52 @@ namespace muagicungban.Controllers
         public ActionResult List(string id, int page)
         {
             List<Item> items;
+            User user = membersRepository.Members.Single(m => m.Username == HttpContext.User.Identity.Name);
             if (id == "all")
             {
-                items = itemsRepository.Items.Where(i => i.OwnerID == HttpContext.User.Identity.Name).ToList();
+                if (user.Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "Manager"))
+                {
+                    items = itemsRepository.Items.ToList();
+                }
+                else
+                    items = itemsRepository.Items.Where(i => i.OwnerID == user.Username).ToList();
             }
-            else if (id == "checking")
+            else if (id == "future")
             {
-                items = itemsRepository.Items.Where(i => i.OwnerID == HttpContext.User.Identity.Name && !i.IsChecked).ToList();
+                if (user.Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "Manager"))
+                    items = itemsRepository.Items.Where(i => DateTime.Now < i.StartDate && i.IsChecked).ToList();
+                else
+                    items = itemsRepository.Items.Where(i => i.OwnerID == user.Username && DateTime.Now < i.StartDate && i.IsChecked).ToList();
             }
-            else if (id == "sell")
+            else if (id == "current")
             {
-                items = itemsRepository.Items.Where(i => i.OwnerID == HttpContext.User.Identity.Name && DateTime.Now < i.StartDate && i.IsChecked).ToList();
-            }
-            else if (id == "selling")
-            {
-                items = itemsRepository.Items.Where(i => i.OwnerID == HttpContext.User.Identity.Name &&
-                                                            i.StartDate <= DateTime.Now &&
+                if (user.Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "Manager"))
+                    items = itemsRepository.Items.Where(i => i.StartDate <= DateTime.Now &&
                                                             DateTime.Now < i.EndDate && i.IsChecked).ToList();
+                else
+                    items = itemsRepository.Items.Where(i => i.OwnerID == user.Username &&
+                                            i.StartDate <= DateTime.Now &&
+                                            DateTime.Now < i.EndDate && i.IsChecked).ToList();
             }
             else if (id == "sold")
             {
-                items = itemsRepository.Items.Where(i => i.OwnerID == HttpContext.User.Identity.Name &&
+                if (user.Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "Manager"))
+                    items = itemsRepository.Items.Where(i => i.EndDate < DateTime.Now && i.IsSold == true).ToList();
+                else
+                    items = itemsRepository.Items.Where(i => i.OwnerID == user.Username &&
                                                         i.EndDate < DateTime.Now && i.IsSold == true).ToList();
             }
             else
             {
-                items = itemsRepository.Items.Where(i => i.BuyerID == HttpContext.User.Identity.Name).ToList();
+                if (user.Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "Manager"))
+                {
+                    items = itemsRepository.Items.ToList();
+                }
+                else
+                    items = itemsRepository.Items.Where(i => i.OwnerID == user.Username).ToList();
             }
 
+            ViewData["roles"] = user.Roles;
             ViewData["pageSize"] = pageSize;
             ViewData["totalItems"] = items.Count();
             ViewData["currentPage"] = page;
@@ -232,9 +250,9 @@ namespace muagicungban.Controllers
                 Item item = itemsRepository.Items.Single(i => i.ItemID == id);
                 item.IsChecked = true;
                 itemsRepository.Save(item);
-                return Content("Success");
+                return Content("Đã cập nhật");
             }
-            return Content("Failed");
+            return Content("Cập nhật thất bại");
         }
 
         [Authorize]
@@ -246,9 +264,9 @@ namespace muagicungban.Controllers
                 Item item = itemsRepository.Items.Single(i => i.ItemID == id);
                 item.IsActive = true;
                 itemsRepository.Save(item);
-                return Content("Success");
+                return Content("Đã kích hoạt");
             }
-            return Content("Failed");
+            return Content("Kích hoạt thất bại");
         }
 
         //
@@ -680,7 +698,51 @@ namespace muagicungban.Controllers
             return View("index",items);
         }
 
-        //[Authorize]
-        //public ActionResult Checking(string id)
+        [Authorize]
+        public ActionResult Checking()
+        {
+            User user = membersRepository.Members.Single(m => m.Username == HttpContext.User.Identity.Name);
+            List<Item> items = new List<Item>();
+            if (user.Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "Manager"))
+            {
+                items = itemsRepository.Items.Where(i => i.IsChecked == false).ToList();
+            }
+
+            ViewData["pageSize"] = pageSize;
+            ViewData["totalItems"] = items.Count();
+            ViewData["currentPage"] = 1;
+            ViewData["roles"] = user.Roles;
+
+            return View("List", items);
+        }
+
+        [Authorize]
+        public ActionResult EditItem(long id)
+        {
+            User user = membersRepository.Members.Single(m => m.Username == HttpContext.User.Identity.Name);
+            if (user.Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "Manager"))
+            {
+                Item item = itemsRepository.Items.Single(i => i.ItemID == id);
+                ViewData["roles"] = user.Roles;
+                ViewData["category"] = subCategoriesRepository.subCategories.ToList();
+                return View(item);
+            }
+            return RedirectToAction("index");
+        }
+
+        [Authorize]
+        public ActionResult SetCategory(long id, int categoryID)
+        {
+            Item item = itemsRepository.Items.Single(i => i.ItemID == id);
+            User user = membersRepository.Members.Single(m => m.Username == HttpContext.User.Identity.Name);
+            if (item != null && user.Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "Manager"))
+            {
+                item.SubCategoryID = categoryID;
+                itemsRepository.Save(item);
+                return Content("Đã cập nhật");
+            }
+            return Content("Cập nhật thất bại");
+        }
+
     }
 }

@@ -4,10 +4,12 @@
     List
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<% var Roles = (List<muagicungban.Entities.UserRoles>)ViewData["roles"]; %>
     <div id="content">
         <div class="margin">
             <div class="content-helper clear">
                 <div class="central-column">
+                <% Html.RenderPartial("ItemMenu"); %>
                     <div class="central-content">
                         <div class="mainbox-container">
                             <div class="mainbox-body">
@@ -56,7 +58,14 @@
                                         <tr>
                                             <td>
                                                 <%--1--%>
-                                                <%: Html.ActionLink(item.Title,"Edit",new {id = item.ItemID}) %>
+                                                <% if (Roles != null && Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "manager"))
+                                                   { %>
+                                                    <%: Html.ActionLink(item.Title, "EditItem", new { id = item.ItemID })%>
+                                                <% }
+                                                   else
+                                                   { %>
+                                                <%: Html.ActionLink(item.Title, "Edit", new { id = item.ItemID })%>
+                                                <% } %>
                                             </td>
                                             <td>
                                                 <%--2--%>

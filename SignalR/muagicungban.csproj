@@ -188,6 +188,7 @@
     <Content Include="Views\Item\Create.aspx" />
     <Content Include="Views\Item\Details.aspx" />
     <Content Include="Views\Item\Edit.aspx" />
+    <Content Include="Views\Item\EditItem.aspx" />
     <Content Include="Views\Item\Index.aspx" />
     <Content Include="Views\Item\ItemMenu.ascx" />
     <Content Include="Views\Item\ItemSummary.ascx" />
