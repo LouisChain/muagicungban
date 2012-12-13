@@ -44,16 +44,29 @@
              bidsHistory[1].innerHTML = "<td>" + user + "</td><td>" + showprice + "</td><td>" + bidTime + "</td>";
              //alert(bidsHistory[1].innerHTML);
         };
+        <% if (Model.IsAuction) { %>
+            $("#bid<%: Model.ItemID %>").click(function () {
+                // Call the chat method on the server
+                // alert("OK");
+                //alert(Number(currentPrice<%: Model.ItemID %>.innerHTML));
+                if (confirm("Chắc chứ!!!"))
+                    player.server.placebid(<%: Model.ItemID %>, Number(currentPrice<%: Model.ItemID %>.innerHTML) + Number(increasePrice<%: Model.ItemID %>.value));
+                //alert(<%: Model.ItemID %> + " " + Number(current-price<%: Model.ItemID %>.innerHTML) + " " + Number(increasePrice<%: Model.ItemID %>.value);
+            });
+        <% } else { %>
+            $("#buy<%: Model.ItemID %>").click(function () {
+                // Call the chat method on the server
+                // alert(Number(currentPrice[<%: Model.ItemID %>].innerHTML)+ 1000 ); //[RUN]
 
-        $("#bid<%: Model.ItemID %>").click(function () {
-            // Call the chat method on the server
-            // alert("OK");
-            //alert(Number(currentPrice<%: Model.ItemID %>.innerHTML));
-            if (confirm("Chắc chứ!!!"))
-                player.server.placebid(<%: Model.ItemID %>, Number(currentPrice<%: Model.ItemID %>.innerHTML) + Number(increasePrice<%: Model.ItemID %>.value));
-            //alert(<%: Model.ItemID %> + " " + Number(current-price<%: Model.ItemID %>.innerHTML) + " " + Number(increasePrice<%: Model.ItemID %>.value);
-        });
-       
+                // player.server.send(Number(currentPrice[<%: Model.ItemID %>].innerHTML));
+                if (confirm("Chắc chứ!"))
+                    player.server.buy(<%: Model.ItemID %>);
+
+                // alert("OK");
+                // player.server.PlaceBid(<%: Model.ItemID %>, Number($('#current-price').val() + 1));
+
+            });
+       <% } %>
         // Start the connection
         $.connection.hub.start();
     });

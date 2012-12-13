@@ -43,19 +43,37 @@
 
 
 <% foreach (var m in Model)
-    { %>
-        $("#bid<%: m.ItemID %>").click(function () {
-            // Call the chat method on the server
-            // alert(Number(currentPrice[<%: m.ItemID %>].innerHTML)+ 1000 ); //[RUN]
+    { 
+        if (m.IsAuction) 
+        {    %>
+            $("#bid<%: m.ItemID %>").click(function () {
+                // Call the chat method on the server
+                // alert(Number(currentPrice[<%: m.ItemID %>].innerHTML)+ 1000 ); //[RUN]
 
-            // player.server.send(Number(currentPrice[<%: m.ItemID %>].innerHTML));
-            if (confirm("Chắc chứ!"))
-                player.server.placebid(<%: m.ItemID %>, Number(currentPrice[<%: m.ItemID %>].innerHTML) + Number(increasePrice[<%: m.ItemID %>].value));
+                // player.server.send(Number(currentPrice[<%: m.ItemID %>].innerHTML));
+                if (confirm("Chắc chứ!"))
+                    player.server.placebid(<%: m.ItemID %>, Number(currentPrice[<%: m.ItemID %>].innerHTML) + Number(increasePrice[<%: m.ItemID %>].value));
 
-            // alert("OK");
-            // player.server.PlaceBid(<%: m.ItemID %>, Number($('#current-price').val() + 1));
+                // alert("OK");
+                // player.server.PlaceBid(<%: m.ItemID %>, Number($('#current-price').val() + 1));
 
-        });
+            });
+     <% } 
+        else 
+        {%>
+            $("#buy<%: m.ItemID %>").click(function () {
+                // Call the chat method on the server
+                // alert(Number(currentPrice[<%: m.ItemID %>].innerHTML)+ 1000 ); //[RUN]
+
+                // player.server.send(Number(currentPrice[<%: m.ItemID %>].innerHTML));
+                if (confirm("Chắc chứ!"))
+                    player.server.buy(<%: m.ItemID %>);
+
+                // alert("OK");
+                // player.server.PlaceBid(<%: m.ItemID %>, Number($('#current-price').val() + 1));
+
+            });
+     <% } %>
 <% } %>
        
         // Start the connection
@@ -69,7 +87,6 @@
         color: rgb(255, 255, 255); border-color: #DD1F1F; width: 50%; height: 50px; text-align: center;
         padding-top: 5px; font-weight: bolder;">
     </div>
-
     <% if (Model.Any())
        { %>
     <div id="content">

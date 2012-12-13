@@ -51,7 +51,7 @@ namespace muagicungban
         {
             while (true)
             {
-                var itemsEnded = itemsRepository.Items.Where(i => i.IsChecked && i.IsActive && i.IsAuction && !i.IsSold && i.EndDate <= DateTime.Now).ToList();
+                var itemsEnded = itemsRepository.Items.Where(i => i.IsChecked && i.IsActive && !i.IsSold && i.EndDate <= DateTime.Now).ToList();
                 foreach (var item in itemsEnded)
                 {
                     Order order = new Order();

@@ -37,6 +37,9 @@
            { %>
             <span class="product_sprice"><%: Model.MaxPrice.ToString("#,### VNĐ")%></span>
             <div id="show-current-price<%: Model.ItemID %>" name="show-current-price<%: Model.ItemID %>" style="display:none;"><%: Model.MaxPrice %></div>
+            <script>
+                currentUser[<%: Model.ItemID %>] = document.getElementById("current-user<%: Model.ItemID %>");
+            </script>
         <% } %>
            <br />&nbsp
 	</div>

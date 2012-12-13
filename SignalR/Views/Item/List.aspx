@@ -60,7 +60,7 @@
                                         <tr <% if(j % 2 == 0) { %>style="background-color:#DDD7D7;"<% } %>>
                                             <td>
                                                 <%--1--%>
-                                                <% if (Roles != null && Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "manager"))
+                                                <% if (Roles != null && Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "Manager"))
                                                    { %>
                                                     <%: Html.ActionLink(item.Title, "EditItem", new { id = item.ItemID })%>
                                                 <% }
@@ -82,7 +82,7 @@
                                             </td>
                                             <td>
                                                 <%--4--%>
-                                                <%: item.SubCategory.Name %>
+                                                <%: item.SubCategory %>
                                             </td>
                                             <td>
                                                 <%--5--%>

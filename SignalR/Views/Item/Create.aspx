@@ -105,7 +105,7 @@
                                                                 Giá bắt đầu
                                                             </div>
                                                             <div class="editor-field">
-                                                                <%: Html.TextBoxFor(model => model.StartPrice)%>
+                                                                <input type="text" id="StartPrice" name="StartPrice" value=0 />
                                                             </div>
                                                         </div>
                                                     </div>
