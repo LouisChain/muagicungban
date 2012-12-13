@@ -93,6 +93,7 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\WatchList.cs" />
+    <Compile Include="Extension.cs" />
     <Compile Include="HtmlHelpers\PagingHelpers.cs" />
     <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="PlayerHub.cs" />

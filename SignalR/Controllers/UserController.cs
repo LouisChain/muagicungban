@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
+using muagicungban;
 using muagicungban.Models;
 using muagicungban.Abstract;
 using muagicungban.Entities;
@@ -142,7 +143,7 @@ namespace muagicungban.Controllers
                 User member = new User();
                 member.Username = Username;
                 member.Name = collection["Name"];
-                member.Password = collection["Password"];
+                member.Password = collection["Password"].md5();
                 member.Phone = collection["Phone"];
                 member.Email = collection["Email"];
 
@@ -211,7 +212,7 @@ namespace muagicungban.Controllers
                 User member = new User();
                 member.Username = Username;
                 member.Name = collection["Name"];
-                member.Password = collection["Password"];
+                member.Password = collection["Password"].md5();
                 member.Phone = collection["Phone"];
                 member.Email = collection["Email"];
                 membersRepository.Save(member);
@@ -284,7 +285,7 @@ namespace muagicungban.Controllers
                         User user = new User();
                         user.RegisDate = DateTime.Now;
                         user.Username = register.Username;
-                        user.Password = register.Password;
+                        user.Password = register.Password.md5();
                         user.Name = register.Name;
                         user.Email = register.Email;
                         user.Address = register.Address;
@@ -344,7 +345,7 @@ namespace muagicungban.Controllers
             User member = membersRepository.Members.Single(m => m.Username == model.Username);
             if (ModelState.IsValid)
             {
-                if (!Membership.ValidateUser(model.Username, model.Password))
+                if (!membersRepository.Members.Any(m => m.Username == model.Username && m.Password == model.Password.md5()))
                     ModelState.AddModelError("", "Thông tin đăng nhập không đúng.!!!");
                 else if (!member.IsActive)
                 {
