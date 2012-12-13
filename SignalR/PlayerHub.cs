@@ -14,6 +14,7 @@ namespace SignalR
     {
         private ItemsRepository itemsRepository = new ItemsRepository(muagicungban.Connection.connectionString);
         private BidsRepository bidsRepository = new BidsRepository(muagicungban.Connection.connectionString);
+        private MembersRepository membersRepository = new MembersRepository(muagicungban.Connection.connectionString);
 
         public void Send(string message)
         {
@@ -44,6 +45,14 @@ namespace SignalR
                 if (item.OwnerID == Context.User.Identity.Name)
                 {
                     Clients.Caller.showMessage("Chủ sở hữu không thể thực hiện chức năng này!", 3000);
+                    return;
+                }
+
+                // Prevent user without buy permission
+                User user = membersRepository.Members.Single(m => m.Username == Context.User.Identity.Name);
+                if (user.Roles == null || !user.Roles.Any(r => r.Role.RoleName == "Buyer"))
+                {
+                    Clients.Caller.showMessage("Bạn không được quyền tham gia mua!!!", 3000);
                     return;
                 }
 
@@ -99,6 +108,13 @@ namespace SignalR
                 if (item.OwnerID == Context.User.Identity.Name)
                 {
                     Clients.Caller.showMessage("Chủ sở hữu không thể thực hiện chức năng này!", 3000);
+                    return;
+                }
+
+                User user = membersRepository.Members.Single(m => m.Username == Context.User.Identity.Name);
+                if (user.Roles == null || !user.Roles.Any(r => r.Role.RoleName == "Bidder"))
+                {
+                    Clients.Caller.showMessage("Bạn không được quyền tham gia đấu giá", 3000);
                     return;
                 }
 

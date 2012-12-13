@@ -13,7 +13,7 @@ namespace muagicungban.Controllers
 {
     public class ItemController : Controller
     {
-        public const int pageSize = 20;
+        public const int pageSize = 22;
 
         private ItemsRepository itemsRepository;
         private ImagesRepository imagesRepository;
@@ -42,19 +42,28 @@ namespace muagicungban.Controllers
 
             // For showing number of uncheck item
             int i = 0;
-            foreach (var item in itemsRepository.Items.Where(a => a.IsChecked == false))
+            foreach (var item in itemsRepository.Items.Where(a => a.IsChecked == false && !a.Owner.IsBan))
                 i++;
             ViewData["Uncheck"] = i;
 
             // For showing number of item list
             ViewData["List"] = itemsRepository.Items.Count();
+
+            // For showing number of ended item
+            ViewData["EndedNums"] = itemsRepository.Items.Where(j => j.EndDate < DateTime.Now && j.IsActive && j.IsChecked && !j.Owner.IsBan).Count();
+
+            // For showing number of selling item
+            ViewData["SellingNums"] = itemsRepository.Items.Where(j => j.StartDate <= DateTime.Now && DateTime.Now < j.EndDate && j.IsActive && j.IsChecked && !j.Owner.IsBan).Count();
             
+            // For showing number of future item
+            ViewData["FutureNums"] = itemsRepository.Items.Where(j => DateTime.Now < j.StartDate && j.IsActive && j.IsChecked && !j.Owner.IsBan).Count();
+
         }
 
         //
         // GET: /Item/
 
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
             List<Item> items = new List<Item>();
             if (itemPlaces.ItemPlaces.Any(i => i.PlaceName == "index1"))
@@ -63,7 +72,7 @@ namespace muagicungban.Controllers
                 {
                     ItemPlace _itemplace = itemPlaces.ItemPlaces.Where(p => p.PlaceName == "index1" && p.IsPaid && p.StartDate <= DateTime.Now && DateTime.Now < p.EndDate).First();
                     Item _item = itemsRepository.Items.Single(i => i.ItemID == _itemplace.ItemID);
-                    if (_item.IsActive && _item.IsChecked)
+                    if (_item.IsActive && _item.IsChecked && !_item.Owner.IsBan)
                         items.Add(_item);
                 }
             }
@@ -74,7 +83,7 @@ namespace muagicungban.Controllers
                 foreach (var item in _itemPlaces)
                 {
                     Item _item = itemsRepository.Items.First(i => i.ItemID == item.ItemID);
-                    if (_item.IsChecked && _item.IsActive)
+                    if (_item.IsChecked && _item.IsActive && !_item.Owner.IsBan)
                     if ( !items.Any(x => x.ItemID == _item.ItemID))
                             items.Add(_item);
                 }
@@ -85,53 +94,66 @@ namespace muagicungban.Controllers
                 foreach (var item in _itemPlaces)
                 {
                     Item _item = itemsRepository.Items.First(i => i.ItemID == item.ItemID);
-                    if (_item.IsChecked && _item.IsActive)
+                    if (_item.IsChecked && _item.IsActive && !_item.Owner.IsBan)
                     if (  !items.Any(x => x.ItemID == _item.ItemID))
                         items.Add(_item);
                 }
             }
 
-            return View(items);
+            ViewData["pageSize"] = pageSize;
+            ViewData["totalItems"] = items.Count();
+            ViewData["currentPage"] = page;
+
+            return View("Index", items.Skip((page - 1) * pageSize).Take(pageSize));
         }
 
-        public ActionResult SearchIndex(string key, string catagory)
+        public ActionResult View(string id, int page)
         {
             List<Item> items = new List<Item>();
-            if (itemPlaces.ItemPlaces.Any(i => i.PlaceName == "index1"))
+            if (id == "ended")
             {
-                if (itemPlaces.ItemPlaces.Any(p => p.PlaceName == "index1" && p.StartDate <= DateTime.Now && DateTime.Now < p.EndDate))
-                {
-                    ItemPlace _itemplace = itemPlaces.ItemPlaces.Where(p => p.PlaceName == "index1" && p.IsPaid && p.StartDate <= DateTime.Now && DateTime.Now < p.EndDate).First();
-                    Item _item = itemsRepository.Items.Single(i => i.ItemID == _itemplace.ItemID);
-                    if (_item.IsActive && _item.IsChecked)
-                        items.Add(_item);
-                }
+                items = itemsRepository.Items.Where(i => i.EndDate < DateTime.Now && i.IsActive && i.IsChecked && !i.Owner.IsBan).ToList();
             }
+            else if (id == "selling")
+            {
+                items = itemsRepository.Items.Where(i => i.StartDate <= DateTime.Now && DateTime.Now < i.EndDate && i.IsChecked && i.IsActive && !i.Owner.IsBan).ToList();
+            }
+            else if (id == "future")
+            {
+                items = itemsRepository.Items.Where(i => DateTime.Now < i.StartDate && i.IsActive && i.IsChecked && !i.Owner.IsBan).ToList();
+            }
+            else
+                RedirectToAction("index");
+            ViewData["pageSize"] = pageSize;
+            ViewData["totalItems"] = items.Count();
+            ViewData["currentPage"] = page;
 
-            if (itemPlaces.ItemPlaces.Any(i => i.PlaceName == "index10"))
-            {
-                List<ItemPlace> _itemPlaces = itemPlaces.ItemPlaces.Where(p => p.PlaceName == "index10" && p.StartDate <= DateTime.Now && DateTime.Now < p.EndDate).ToList();
-                foreach (var item in _itemPlaces)
-                {
-                    Item _item = itemsRepository.Items.First(i => i.ItemID == item.ItemID);
-                    if (_item.IsChecked && _item.IsActive && _item.Title.ToLower().Contains(key.ToLower()))
-                        if (!items.Any(x => x.ItemID == _item.ItemID))
-                            items.Add(_item);
-                }
-            }
-            if (itemPlaces.ItemPlaces.Any(i => i.PlaceName == "index100"))
-            {
-                List<ItemPlace> _itemPlaces = itemPlaces.ItemPlaces.Where(p => p.PlaceName == "index100" && p.IsPaid && p.EndDate >= DateTime.Now && p.StartDate <= DateTime.Now).ToList();
-                foreach (var item in _itemPlaces)
-                {
-                    Item _item = itemsRepository.Items.First(i => i.ItemID == item.ItemID);
-                    if (_item.IsChecked && _item.IsActive && _item.Title.ToLower().Contains(key.ToLower()))
-                        if (!items.Any(x => x.ItemID == _item.ItemID))
-                            items.Add(_item);
-                }
-            }
+            return View("Index", items.Skip((page - 1) * pageSize).Take(pageSize));
+        }
 
-            return View(items);
+        public ActionResult Search(string key, string category, int page = 1)
+        {
+            List<Item> items = new List<Item>();
+            if (category == "All")
+            {
+                items = itemsRepository.Items.Where(i =>  i.IsChecked && i.IsActive &&
+                                        !i.Owner.IsBan && 
+                                        (i.Title.ToLower().Contains(key.ToLower()) || i.Description.ToLower().Contains(key.ToLower()))).ToList();
+            }
+            else
+            {
+                if (key == "")
+                    items = itemsRepository.Items.Where(i => i.SubCategoryID == int.Parse(category) && i.IsChecked && i.IsActive && !i.Owner.IsBan ).ToList();
+                else
+                    items = itemsRepository.Items.Where(i =>  i.SubCategoryID == int.Parse(category) &&
+                                        i.IsChecked && i.IsActive &&
+                                        !i.Owner.IsBan && (i.Title.ToLower().Contains(key.ToLower()) || i.Description.ToLower().Contains(key.ToLower()))).ToList();
+            }
+            ViewData["pageSize"] = pageSize;
+            ViewData["totalItems"] = items.Count();
+            ViewData["currentPage"] = page;
+
+            return View("Index", items.Skip((page - 1) * pageSize).Take(pageSize));
         }
 
         public ActionResult Category(int id, string type)
@@ -706,6 +728,7 @@ namespace muagicungban.Controllers
                 //Update showing number of join items
                 HttpContext.Session["Join"] = count;
             }
+
             return View("index",items);
         }
 

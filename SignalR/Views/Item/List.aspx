@@ -82,7 +82,7 @@
                                             </td>
                                             <td>
                                                 <%--4--%>
-                                                <%: item.SubCategory %>
+                                                <%: item.SubCategory.Name %>
                                             </td>
                                             <td>
                                                 <%--5--%>

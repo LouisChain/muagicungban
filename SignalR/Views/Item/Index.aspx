@@ -87,13 +87,13 @@
         color: rgb(255, 255, 255); border-color: #DD1F1F; width: 50%; height: 50px; text-align: center;
         padding-top: 5px; font-weight: bolder;">
     </div>
-    <% if (Model.Any())
-       { %>
     <div id="content">
         <div class="margin">
             <div class="content-helper clear">
                 <div class="central-column">
-                <% Html.RenderPartial("ItemMenu"); %>
+                    <% Html.RenderPartial("ItemMenu"); %>
+                    <% if (Model.Any())
+                       { %>
                     <div class="central-content">
                         <% var top1 = Model.First();
                            Html.RenderPartial("Item_Top1", top1); %>
@@ -110,12 +110,12 @@
                                        { %>
                                 <div class="productbox-container first" style="float: left">
                                     <%
-        }
+}
                                        else if (i % 3 == 2)
                                        { %>
                                     <div class="productbox-container " style="float: left">
                                         <%
-        }
+}
                                        else
                                        {%>
                                         <div class="productbox-container last" style="float: left">
@@ -131,6 +131,12 @@
                             </div>
                         </div>
                     </div>
+                    <% } %>
                 </div>
-<% } %>
+                <div class="pagination cm-pagination-wraper center">
+                    <%: Html.PageLinks(new muagicungban.Models.PagingInfo {CurrentPage = (int)ViewData["currentPage"], 
+                                                           TotalItems = (int)ViewData["totalItems"], 
+                                                           ItemsPerPage = (int)ViewData["pageSize"] },
+                                i => Url.Content(Request.Url.AbsolutePath + "?page=" + i ))%>
+                </div>
 </asp:Content>

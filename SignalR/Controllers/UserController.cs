@@ -292,6 +292,22 @@ namespace muagicungban.Controllers
                         user.Phone = register.Phone;
                         user.IsActive = false;
                         membersRepository.Add(user);
+
+                        UserRoles userRoles = new UserRoles();
+                        userRoles.RoleID = rolesRepository.Roles.Single(r => r.RoleName == "Buyer").RoleID;
+                        userRoles.UserID = user.Username;
+                        userRolesRepository.Add(userRoles);
+
+                        userRoles = new UserRoles();
+                        userRoles.RoleID = rolesRepository.Roles.Single(r => r.RoleName == "Seller").RoleID;
+                        userRoles.UserID = user.Username;
+                        userRolesRepository.Add(userRoles);
+
+                        userRoles = new UserRoles();
+                        userRoles.UserID = user.Username;
+                        userRoles.RoleID = rolesRepository.Roles.Single(r => r.RoleName == "Bidder").RoleID;
+                        userRolesRepository.Add(userRoles);
+
                         return Redirect(Url.Action("Index","Item"));
                     }
                 }

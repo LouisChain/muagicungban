@@ -24,15 +24,14 @@
 </div>--%>
 
 <div class="select_city">
-    <form action="http://<%: Request.Url.Authority %>/item/SearchIndex" method="post" id="header-selectcity-form" class="validator">
+    <form action="http://<%: Request.Url.Authority %>/item/Search" method="get" id="header-selectcity-form" class="validator">
     <input type="text" name="key" onkeypress="return PerformClick(event, 'btnSearch');" 
-            onfocus="if(this.value == 'Nhập từ khóa tìm kiếm...') this.value='';" 
-            onblur="if(this.value=='') this.value='Nhập từ khóa tìm kiếm...';" 
-            value="Nhập từ khóa tìm kiếm..."class="inputbox" / 
-            style = "background:no-repeat;padding:10px 96px 13px 10px;border:none;width:350px; background-color:#FFF">
+            class="inputbox"
+            style = "background:no-repeat;padding:10px 96px 13px 10px;border:none;width:350px; background-color:#FFF;" />
     <% if (categories != null)
        { %>
-    <select name="catagory" style="padding:10px 10px 10px;width:150px; background-color:#FFF; left:610">
+    <select name="category" style="padding:10px 10px 10px;width:150px; background-color:#FFF; left:610">
+        <option value="All">Tất cả</option>
         <% foreach (var item in categories)
            { %>
                 <option value="<%: item.ID %>"><%: item.Name%></option>

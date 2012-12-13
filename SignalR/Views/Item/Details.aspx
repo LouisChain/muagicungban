@@ -86,7 +86,7 @@
                         <div class="central-column">
                             <div>
                                 <div class="mainbox-body">
-                                    <% Html.RenderPartial("SubMenu",new muagicungban.Entities.User()); %>
+                                    <% Html.RenderPartial("ItemMenu"); %>
                                     <div class="central-content">
                                         <div class="box_product_detail">
                                             <div class="box_product_detail_padding" style="">
