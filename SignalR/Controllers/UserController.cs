@@ -16,12 +16,13 @@ namespace muagicungban.Controllers
     public class UserController : Controller
     {
         // Paging with 30 element per page
-        public const int pageSize = 30;
+        public const int pageSize = 20;
 
         private IMemberRepository membersRepository;
         private UserRolesRepository userRolesRepository;
         private RolesRepository rolesRepository;
         private ItemsRepository itemsRepository;
+        private EmailActiveRepository emailActiveRepository;
 
         public UserController()
         {
@@ -29,6 +30,7 @@ namespace muagicungban.Controllers
             userRolesRepository = new UserRolesRepository(Connection.connectionString);
             rolesRepository = new RolesRepository(Connection.connectionString);
             itemsRepository = new ItemsRepository(Connection.connectionString);
+            emailActiveRepository = new EmailActiveRepository(Connection.connectionString);
         }
         //
         // GET: /User/
@@ -72,19 +74,19 @@ namespace muagicungban.Controllers
             return View(userList.Skip((page - 1) * pageSize).Take(pageSize).ToList());
         }
 
-        [Authorize]
-        public ActionResult Active(string id)
-        {
-            User member = membersRepository.Members.Single(m => m.Username == id);
-            User user = membersRepository.Members.Single(u => u.Username == HttpContext.User.Identity.Name);
-            if (user.Roles.Any(r => r.Role.RoleName == "Manager" || r.Role.RoleName == "Admin"))
-            {
-                member.IsActive = true;
-                membersRepository.Save(member);
-                return Content("Success");
-            }
-            return Content("Failed");
-        }
+        //[Authorize]
+        //public ActionResult Active(string id)
+        //{
+        //    User member = membersRepository.Members.Single(m => m.Username == id);
+        //    User user = membersRepository.Members.Single(u => u.Username == HttpContext.User.Identity.Name);
+        //    if (user.Roles.Any(r => r.Role.RoleName == "Manager" || r.Role.RoleName == "Admin"))
+        //    {
+        //        member.IsActive = true;
+        //        membersRepository.Save(member);
+        //        return Content("Success");
+        //    }
+        //    return Content("Failed");
+        //}
 
         //
         // GET: /User/Details/5
@@ -125,33 +127,43 @@ namespace muagicungban.Controllers
         // POST: /User/Create
 
         [HttpPost]
+        [Authorize]
         public ActionResult Create(FormCollection collection)
         {
-            string Username = collection["Username"];
+            User user = membersRepository.Members.Single(m => m.Username == HttpContext.User.Identity.Name);
+            if (user.Roles.Any(r => r.Role.RoleName == "Manager" || r.Role.RoleName == "Admin"))
             {
-                var roldIDs = collection["role"].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                string Username = collection["Username"];
+                {
+                    var roldIDs = collection["role"].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
-                List<UserRoles> userRoles = new List<UserRoles>();
-                if (roldIDs != null)
-                    foreach (var item in roldIDs)
-                    {
-                        UserRoles _roles = new UserRoles();
-                        _roles.RoleID = int.Parse(item);
-                        _roles.UserID = Username;
-                        userRoles.Add(_roles);
-                    }
-                User member = new User();
-                member.Username = Username;
-                member.Name = collection["Name"];
-                member.Password = collection["Password"].md5();
-                member.Phone = collection["Phone"];
-                member.Email = collection["Email"];
+                    List<UserRoles> userRoles = new List<UserRoles>();
+                    if (roldIDs != null)
+                        foreach (var item in roldIDs)
+                        {
+                            UserRoles _roles = new UserRoles();
+                            _roles.RoleID = int.Parse(item);
+                            _roles.UserID = Username;
+                            userRoles.Add(_roles);
+                        }
+                    User member = new User();
+                    member.Username = Username;
+                    member.Name = collection["Name"];
+                    member.Password = collection["Password"].md5();
+                    member.Phone = collection["Phone"];
+                    member.Email = collection["Email"];
+                    member.Address = collection["Address"];
+                    member.RegisDate = DateTime.Now;
+                    member.IsActive = true;
+                    member.Birthday = DateTime.Parse(collection["Birthday"]);
 
-                membersRepository.Save(member);
-                userRolesRepository.DeleteAll(userRolesRepository.UserRoles.Where(m => m.UserID == Username).ToList());
-                userRolesRepository.AddAll(userRoles);
-                return RedirectToAction("List", new { page = 1 });
+                    membersRepository.Save(member);
+                    userRolesRepository.DeleteAll(userRolesRepository.UserRoles.Where(m => m.UserID == Username).ToList());
+                    userRolesRepository.AddAll(userRoles);
+                    return RedirectToAction("List", new { page = 1 });
+                }
             }
+            return RedirectToAction("Index");
         }
         
         //
@@ -195,30 +207,39 @@ namespace muagicungban.Controllers
         {
             ////try
             User mem = membersRepository.Members.Single(m => m.Username == Username);
-            User user = membersRepository.Members.Single(u => u.Username == HttpContext.User.Identity.Name);
-            if (user.Username == mem.Username || user.Roles.Any(r => r.Role.RoleName == "Manager" || r.Role.RoleName == "Admin"))
+            if (mem != null)
             {
-                var roldIDs = collection["role"].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                User user = membersRepository.Members.Single(u => u.Username == HttpContext.User.Identity.Name);
+                if (user.Username == mem.Username || user.Roles.Any(r => r.Role.RoleName == "Manager" || r.Role.RoleName == "Admin"))
+                {
+                    var roldIDs = collection["role"].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
-                List<UserRoles> userRoles = new List<UserRoles>();
-                if (roldIDs != null)
-                    foreach (var item in roldIDs)
-                    {
-                        UserRoles _roles = new UserRoles();
-                        _roles.RoleID = int.Parse(item);
-                        _roles.UserID = Username;
-                        userRoles.Add(_roles);
-                    }
-                User member = new User();
-                member.Username = Username;
-                member.Name = collection["Name"];
-                member.Password = collection["Password"].md5();
-                member.Phone = collection["Phone"];
-                member.Email = collection["Email"];
-                membersRepository.Save(member);
-                userRolesRepository.DeleteAll(userRolesRepository.UserRoles.Where(m => m.UserID == Username).ToList());
-                userRolesRepository.AddAll(userRoles);
-                
+                    List<UserRoles> userRoles = new List<UserRoles>();
+                    if (roldIDs != null)
+                        foreach (var item in roldIDs)
+                        {
+                            UserRoles _roles = new UserRoles();
+                            _roles.RoleID = int.Parse(item);
+                            _roles.UserID = Username;
+                            userRoles.Add(_roles);
+                        }
+                    if (collection["Name"] != "")
+                        mem.Name = collection["Name"];
+                    if (collection["Password"] != "")
+                        mem.Password = collection["Password"].md5();
+                    if (collection["Phone"] != "")
+                        mem.Phone = collection["Phone"];
+                    if (collection["Email"] != "")
+                        mem.Email = collection["Email"];
+                    if (collection["Address"] != "")
+                        mem.Address = collection["Address"];
+                    if (collection["Birthday"] != "")
+                        mem.Birthday = DateTime.Parse(collection["Birthday"]);
+                    membersRepository.Save(mem);
+                    userRolesRepository.DeleteAll(userRolesRepository.UserRoles.Where(m => m.UserID == Username).ToList());
+                    userRolesRepository.AddAll(userRoles);
+
+                }
             }
             return RedirectToAction("List", new { page = 1 });
             //catch
@@ -270,14 +291,14 @@ namespace muagicungban.Controllers
             {
                 if (membersRepository.Members.Any(m => m.Username == register.Username))
                 {
-                    TempData["username-error"] = "Username already be used, try other";
+                    TempData["username-error"] = "Tài khoản này đã có người sử dụng";
                     return View(register);
                 }
                 if (register.Captcha == HttpContext.Session["captchastring"].ToString())
                 {
                     if (register.Password != register.ConfirmPassword)
                     {
-                        TempData["PasswordNotMatch"] = "Confirm password didn't match, please re try";
+                        TempData["PasswordNotMatch"] = "Mật khẩu so sánh không khớp, vui lòng nhập lại";
                         return View(register);
                     }
                     else
@@ -309,7 +330,21 @@ namespace muagicungban.Controllers
                         userRoles.RoleID = rolesRepository.Roles.Single(r => r.RoleName == "Bidder").RoleID;
                         userRolesRepository.Add(userRoles);
 
-                        return Redirect(Url.Action("Index","Item"));
+                        // GENERATE EMAIL ACTIVE INFORMATION
+                        string code = Extension.AutoString(10).md5();
+                        EmailActive active = new EmailActive();
+                        active.Username = user.Username;
+                        active.Code = code;
+                        emailActiveRepository.Add(active);
+                        string message = "Vui lòng click vào đường link dưới đây để thực hiện kích hoạt <br> " +
+                                         "<a href=\"http://" + Request.Url.Authority + "/user/active/" + user.Username + "?code="
+                                         + active.Code + "\" >http://" + Request.Url.Authority + "/user/active/" + user.Username + "?code="
+                                         + active.Code + "</a>";
+                        Extension.SendEmail(user.Email, "Thông tin kích hoạt tài khoản", message);
+
+                        ViewData["message"] = "Đăng ký tài khoản thành công, hệ thống sẽ gửi email kích hoạt tài khoản trong giây lát" +
+                                              ". Vui lòng kiểm tra email có địa chỉ " + user.Email + "để kích hoạt";
+                        return View("RegisterMessage");
                     }
                 }
                 else
@@ -450,6 +485,33 @@ namespace muagicungban.Controllers
                 membersRepository.Save(user);
             }
             return Content("");
+        }
+
+        public ActionResult Active(string id, string code)
+        {
+            if (emailActiveRepository.EmailActives.Any(e => e.Username == id))
+            {
+                EmailActive active = emailActiveRepository.EmailActives.Single(i => i.Username == id);
+                if (active.Code == code)
+                {
+                    User user = membersRepository.Members.Single(m => m.Username == id);
+                    user.IsActive = true;
+                    membersRepository.Save(user);
+                    emailActiveRepository.Delete(active);
+                    ViewData["message"] = "Kích hoạt thành công, bạn đã có thể thực hiện đăng nhập";
+                    return View("RegisterMessage");
+                }
+            }
+            else
+            {
+                User user = membersRepository.Members.Single(m => m.Username == id);
+                if (user.IsActive)
+                {
+                    ViewData["message"] = "Tài khoản đã được kích hoạt trước đó, bạn không cần kích hoạt nữa";
+                    return View("RegisterMessage");
+                }
+            }
+            return Content("Kích hoạt thất bại!!!");
         }
     }
 

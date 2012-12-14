@@ -13,7 +13,7 @@
                 changeMonth: true,
                 changeYear: true,
                 dateFormat: 'dd/mm/yy',
-                yearRange: '1902:2000'
+                yearRange: '1950:2000'
             }
         );
         });

@@ -4,6 +4,20 @@
     Thêm người dùng
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Birthday").datepicker(
+            {
+                monthNames: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                yearRange: '1902:2000'
+            }
+        );
+    });
+    </script>
     <div id="content">
         <div class="margin">
             <div class="content-helper clear">
@@ -49,12 +63,24 @@
                                             <%: Html.TextBoxFor(model => model.Phone) %>
                                             <%: Html.ValidationMessageFor(model => model.Phone) %>
                                         </div>
+                                        <div class="form-field">
+                                            <label>
+                                                Địa chỉ</label>
+                                            <%: Html.TextBoxFor(model => model.Address) %>
+                                            <%: Html.ValidationMessageFor(model => model.Address) %>
+                                        </div>
+                                        <div class="form-field">
+                                            <label>
+                                                Ngày sinh</label>
+                                            <%: Html.EditorFor(model => model.Birthday) %>
+                                            <%: Html.ValidationMessageFor(model => model.Birthday) %>
+                                        </div>
                                     </fieldset>
                                     <fieldset>
                                         <legend>Quyền hạn</legend>
                                         <% foreach (var item in (List<muagicungban.Entities.Role>)ViewData["roleChkBox"])
                                            { %>
-                                        <input type="checkbox" name="role" value="<%: item.RoleID %>" /><%: item.RoleName %>
+                                        <input type="checkbox" name="role" value="<%: item.RoleID %>" <% if (item.RoleName == "Seller" || item.RoleName == "Buyer" || item.RoleName == "Bidder") { %> checked="checked" <% } %> /><%: item.RoleName %>
                                         <% } %>
                                     </fieldset>
                                     <p>
