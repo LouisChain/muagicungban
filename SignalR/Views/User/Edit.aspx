@@ -14,6 +14,7 @@
                                 <div id="content_general">
                                     <h1>
                                         Thay đổi thông tin</h1>
+                                    <% Html.EnableClientValidation(); %>
                                     <% using (Html.BeginForm())
                                        {%>
                                     <%: Html.ValidationSummary(true) %>
@@ -22,8 +23,7 @@
                                         <div class="form-field">
                                             <label>
                                                 Tên đăng nhập</label>
-                                            <%: Html.TextBoxFor(model => model.Username) %>
-                                            <%: Html.ValidationMessageFor(model => model.Username) %>
+                                            <%: Html.DisplayFor(model => model.Username) %>
                                         </div>
                                         <div class="form-field">
                                             <label>
@@ -48,6 +48,18 @@
                                                 Số điện thoại</label>
                                             <%: Html.TextBoxFor(model => model.Phone) %>
                                             <%: Html.ValidationMessageFor(model => model.Phone) %>
+                                        </div>
+                                        <div class="form-field">
+                                            <label>
+                                                Địa chỉ</label>
+                                            <%: Html.EditorFor(model => model.Address) %>
+                                            <%: Html.ValidationMessageFor(model => model.Address) %>
+                                        </div>
+                                        <div class="form-field">
+                                            <label>
+                                                Ngày sinh</label>
+                                            <%: Html.EditorFor(model => model.Birthday) %>
+                                            <%: Html.ValidationMessageFor(model => model.Birthday) %>
                                         </div>
                                     </fieldset>
                                     <fieldset>
