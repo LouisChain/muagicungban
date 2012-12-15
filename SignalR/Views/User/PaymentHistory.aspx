@@ -46,10 +46,10 @@
                                                 <%: item.PaidDate%>
                                             </td>
                                             <td>
-                                                <%: item.PaidMoney%>
+                                                <%: item.PaidMoney.ToString("#,### VNĐ")%>
                                             </td>
                                             <td>
-                                                <%: item.TotalMoney%>
+                                                <%: item.TotalMoney.ToString("#,### VNĐ")%>
                                             </td>
                                             <td align="center">
                                                 <%: item.PaidContent %>

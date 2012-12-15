@@ -24,6 +24,7 @@ namespace muagicungban.Controllers
         private ItemsRepository itemsRepository;
         private EmailActiveRepository emailActiveRepository;
         private PaymentHistoryRepository paymentsRepository;
+        private AccountRechargeRepository accountRechargeRepository;
 
         public UserController()
         {
@@ -33,6 +34,7 @@ namespace muagicungban.Controllers
             itemsRepository = new ItemsRepository(Connection.connectionString);
             emailActiveRepository = new EmailActiveRepository(Connection.connectionString);
             paymentsRepository = new PaymentHistoryRepository(Connection.connectionString);
+            accountRechargeRepository = new AccountRechargeRepository(Connection.connectionString);
 
         }
         //
@@ -618,6 +620,100 @@ namespace muagicungban.Controllers
 
             return View(items.Where(i => i.PaidContent.ToLower().Contains(key.ToLower()) || i.Username.ToLower().Contains(key.ToLower())
                             || i.PaidDate.ToString().Contains(key.ToLower())).Skip((page - 1) * pageSize).Take(pageSize));
+        }
+
+        [Authorize]
+        public ActionResult Recharge()
+        {
+            if (accountRechargeRepository.AccountRecharges.Any(a => a.Username == HttpContext.User.Identity.Name && !a.IsPaid))
+            {
+                TempData["error-message"] = "Bạn có một giao dịch nạp tiền chưa thực hiện thanh toán !!!";
+                TempData["id"] = accountRechargeRepository.AccountRecharges.Single(a => a.Username == HttpContext.User.Identity.Name && !a.IsPaid).RechargeID;
+            }
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Recharge(string money)
+        {
+            if (accountRechargeRepository.AccountRecharges.Any(a => a.Username == HttpContext.User.Identity.Name && !a.IsPaid))
+            {
+                AccountRecharge account = accountRechargeRepository.AccountRecharges.Single(a => a.Username == HttpContext.User.Identity.Name && !a.IsPaid);
+                account.Price = decimal.Parse(money);
+                accountRechargeRepository.Save(account);
+            }
+            else
+            {
+                AccountRecharge account = new AccountRecharge();
+                account.Username = HttpContext.User.Identity.Name;
+                account.Price = decimal.Parse(money);
+                account.IsPaid = false;
+                account.CreateDate = DateTime.Now;
+                accountRechargeRepository.Add(account);
+            }
+            return RedirectToAction("RechargePayment", new { id = accountRechargeRepository.AccountRecharges.Single(a => a.Username == HttpContext.User.Identity.Name && !a.IsPaid).RechargeID });
+
+        }
+
+        [Authorize]
+        public ActionResult RechargePayment(long id)
+        {
+            if (accountRechargeRepository.AccountRecharges.Any(a => a.RechargeID == id))
+            {
+                AccountRecharge account = accountRechargeRepository.AccountRecharges.Single(a => a.RechargeID == id);
+                NL_Checkout nl = new NL_Checkout();
+                String return_url = "http://" + Request.Url.Authority + "/user/RechargeComplete";
+                String receiver = "hoangchunghien@gmail.com";
+                String transaction_info = "Nạp tiền vào tài khoản muagicungban";
+                String order_code = account.RechargeID.ToString();
+                String price = account.Price.ToString();
+                String URL = nl.buildCheckoutUrl(return_url, receiver, transaction_info, order_code, price);
+                ViewData["nganluongURL"] = URL;
+                return View(account);
+            }
+            return RedirectToAction("Recharge");
+        }
+
+        [HttpGet]
+        public ActionResult RechargeComplete(String transaction_info, String order_code, String price, String payment_id, String payment_type, String error_text, String secure_code)
+        {
+            NL_Checkout nl = new NL_Checkout();
+
+            if (!accountRechargeRepository.AccountRecharges.Single(a => a.RechargeID == long.Parse(order_code)).IsPaid)
+            {
+                bool check = nl.verifyPaymentUrl(transaction_info, order_code, price, payment_id, payment_type, error_text, secure_code);
+                if (check)
+                {
+                    AccountRecharge account = accountRechargeRepository.AccountRecharges.Single(a => a.RechargeID == long.Parse(order_code));
+                    account.IsPaid = true;
+                    account.CreateDate = DateTime.Now;
+                    accountRechargeRepository.Save(account);
+
+                    PaymentHistory payment = new PaymentHistory();
+                    User user = membersRepository.Members.Single(m => m.Username == account.Username);
+                    user.Money += account.Price;
+                    membersRepository.Save(user);
+
+                    payment.PaidMoney = account.Price;
+                    payment.TotalMoney = user.Money;
+                    payment.Username = user.Username;
+                    payment.PaidDate = DateTime.Now;
+                    payment.PaidContent = "Nạp tiền vào tài khoản";
+                    paymentsRepository.Add(payment);
+                    if (HttpContext.User.Identity.IsAuthenticated)
+                        HttpContext.Session["Profile"] = user;
+
+                    ViewData["message"] = "Giao dịch nạp tiền thực hiện thành công, số tiền hiện có trong tài khoản " + user.Username + " là " + user.Money.ToString("#,### VNĐ");
+
+                }
+                else
+                    ViewData["message"] = "Giao dịch thất bại, vui lòng thử lại";
+            }
+            else
+                ViewData["message"] = "Giao dịch đã hoàn tất trước đó, vui lòng kiểm tra lại lịch sử giao dịch";
+            return View();
+
         }
     }
 

@@ -91,6 +91,7 @@
     <Compile Include="Abstract\ISubCategoriesRepository.cs" />
     <Compile Include="App_Start\RegisterHubs.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Entities\AccountRecharge.cs" />
     <Compile Include="Entities\EmailActive.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\PaymentHistory.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Extension.cs" />
     <Compile Include="HtmlHelpers\PagingHelpers.cs" />
     <Compile Include="Models\PagingInfo.cs" />
+    <Compile Include="nganluong.cs" />
     <Compile Include="PlayerHub.cs" />
     <Compile Include="Connection.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="MyMembershipProvider.cs" />
     <Compile Include="MyRoleProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AccountRechargeRepository.cs" />
     <Compile Include="Repositories\BidsRepository.cs" />
     <Compile Include="Repositories\CategoriesRepository.cs" />
     <Compile Include="Repositories\EmailActiveRepository.cs" />
@@ -217,6 +220,9 @@
     <Content Include="Views\User\LogOn.aspx" />
     <Content Include="Views\User\PaymentHistory.aspx" />
     <Content Include="Views\User\Profile.aspx" />
+    <Content Include="Views\User\Recharge.aspx" />
+    <Content Include="Views\User\RechargeComplete.aspx" />
+    <Content Include="Views\User\RechargePayment.aspx" />
     <Content Include="Views\User\Register.aspx" />
     <Content Include="Views\User\RegisterMessage.aspx" />
     <Content Include="Views\User\SignOut.aspx" />

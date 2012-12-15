@@ -28,7 +28,7 @@
             <ul class="dropdown-vertical-rtl">
             <li><a href="http://<%: Request.Url.Authority %>/user/profile" rel="nofollow" class="underlined">Thông tin cá nhân</a></li>
             <li><a href="http://<%: Request.Url.Authority %>/user/paymenthistory" rel="nofollow">Lịch sử thanh toán</a></li>
-            <li><a href="/diem-thuong" rel="nofollow">Nạp tài khoản</a></li>
+            <li><a href="http://<%: Request.Url.Authority %>/user/recharge" rel="nofollow">Nạp tài khoản</a></li>
             <!--li><a href="/diem-thuong" rel="nofollow">Điểm tích lũy:&nbsp;<strong>0</strong></a></li-->
             </ul>
         </li>
