@@ -9,12 +9,12 @@
    { %>
     <% if (Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "Manager"))
        { %>
-            <li class="first-level"><span><a href="http://<%: Request.Url.Authority %>/user/list?page=1">Người dùng</a></span></li>
+            <li class="first-level" style="color:#FA6D18;"><span><a href="http://<%: Request.Url.Authority %>/user/list?page=1">Người dùng</a></span></li>
+            <li class="first-level"><span><a>&nbsp</a></span></li>
     <% } %>
-            <li class="first-level"><span><a>&nbsp</a></span></li>
-            <li class="first-level" style="color:Black;"><span><a href="http://<%: Request.Url.Authority %>/item/">Sản phẩm</a></span></li>
-            <li class="first-level"><span><a>&nbsp</a></span></li>
-            <li class="first-level"><span><a href="http://<%: Request.Url.Authority %>/order/?type=all">Đơn hàng</a></span></li>
+            <li class="first-level" style="color:#FA6D18;"><span><a href="http://<%: Request.Url.Authority %>/item/">Sản phẩm</a></span></li>
+            <li class="first-level" style="color:#FA6D18;"><span><a>&nbsp</a></span></li>
+            <li class="first-level" style="color:#FA6D18;"><span><a href="http://<%: Request.Url.Authority %>/order/?type=all">Đơn hàng</a></span></li>
 <% } %>
 </ul>
 
@@ -27,6 +27,7 @@
             <span><a><%:Profile.Name.ToString() %> (<%: Profile.Money.ToString("#,### VND") %>)</a></span>
             <ul class="dropdown-vertical-rtl">
             <li><a href="http://<%: Request.Url.Authority %>/user/profile" rel="nofollow" class="underlined">Thông tin cá nhân</a></li>
+            <li><a href="http://<%: Request.Url.Authority %>/user/paymenthistory" rel="nofollow">Lịch sử thanh toán</a></li>
             <li><a href="/diem-thuong" rel="nofollow">Nạp tài khoản</a></li>
             <!--li><a href="/diem-thuong" rel="nofollow">Điểm tích lũy:&nbsp;<strong>0</strong></a></li-->
             </ul>

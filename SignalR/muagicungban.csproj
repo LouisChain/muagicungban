@@ -93,6 +93,7 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Entities\EmailActive.cs" />
     <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\PaymentHistory.cs" />
     <Compile Include="Entities\WatchList.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="HtmlHelpers\PagingHelpers.cs" />
@@ -126,8 +127,6 @@
     <Compile Include="Models\ItemPosting.cs" />
     <Compile Include="Models\LogOn.cs" />
     <Compile Include="Models\Navigator.cs" />
-    <Compile Include="Models\Payment.cs" />
-    <Compile Include="Models\PaymentAccount.cs" />
     <Compile Include="Models\Register.cs" />
     <Compile Include="Models\Shipping.cs" />
     <Compile Include="MyMembershipProvider.cs" />
@@ -141,6 +140,7 @@
     <Compile Include="Repositories\ItemsRepository.cs" />
     <Compile Include="Repositories\MembersRepository.cs" />
     <Compile Include="Repositories\OrdersRepository.cs" />
+    <Compile Include="Repositories\PaymentHistoryRepository.cs" />
     <Compile Include="Repositories\RolesRepository.cs" />
     <Compile Include="Repositories\ShipmentRepository.cs" />
     <Compile Include="Repositories\ShowablePlaceRepository.cs" />
@@ -215,6 +215,7 @@
     <Content Include="Views\User\Index.aspx" />
     <Content Include="Views\User\List.aspx" />
     <Content Include="Views\User\LogOn.aspx" />
+    <Content Include="Views\User\PaymentHistory.aspx" />
     <Content Include="Views\User\Profile.aspx" />
     <Content Include="Views\User\Register.aspx" />
     <Content Include="Views\User\RegisterMessage.aspx" />

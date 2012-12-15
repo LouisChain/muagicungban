@@ -23,6 +23,7 @@ namespace muagicungban.Controllers
         private RolesRepository rolesRepository;
         private ItemsRepository itemsRepository;
         private EmailActiveRepository emailActiveRepository;
+        private PaymentHistoryRepository paymentsRepository;
 
         public UserController()
         {
@@ -31,6 +32,8 @@ namespace muagicungban.Controllers
             rolesRepository = new RolesRepository(Connection.connectionString);
             itemsRepository = new ItemsRepository(Connection.connectionString);
             emailActiveRepository = new EmailActiveRepository(Connection.connectionString);
+            paymentsRepository = new PaymentHistoryRepository(Connection.connectionString);
+
         }
         //
         // GET: /User/
@@ -41,7 +44,7 @@ namespace muagicungban.Controllers
         }
 
         [Authorize]
-        public ViewResult List(int page)
+        public ViewResult List(string key = "", int page = 1)
         {
             User user = membersRepository.Members.Single(u => u.Username == HttpContext.User.Identity.Name);
             List<User> userList =  new List<User>();
@@ -49,7 +52,8 @@ namespace muagicungban.Controllers
             // DO NOT LIST ADMIN, MANAGER ACCOUNT IF USER HAVE ONLY ROLE MANAGER
             if (user.Roles.Any(r => r.Role.RoleName == "Manager"))
             {
-                foreach (var mem in membersRepository.Members.ToList())
+                foreach (var mem in membersRepository.Members.Where(i => i.Username.ToLower().Contains(key.ToLower()) || i.Username.ToLower().Contains(key.ToLower())
+                            || i.Name.ToString().Contains(key.ToLower())).ToList())
                 {
                     if (!mem.Roles.Any(r => r.Role.RoleName == "Manager" || r.Role.RoleName == "Admin"))
                         userList.Add(mem);
@@ -59,14 +63,17 @@ namespace muagicungban.Controllers
             // DO NOT LIST ADMIN ACCOUNT IF USER ARE ADMIN
             if (user.Roles.Any(r => r.Role.RoleName == "Admin"))
             {
-                foreach (var mem in membersRepository.Members.ToList())
+                foreach (var mem in membersRepository.Members.Where(i => i.Username.ToLower().Contains(key.ToLower()) || i.Username.ToLower().Contains(key.ToLower())
+                            || i.Name.ToString().Contains(key.ToLower())).ToList())
                 {
                     if (!mem.Roles.Any(r => r.Role.RoleName == "Admin")) 
                         userList.Add(mem);
                 }
                 //userList = membersRepository.Members.Where(m => !m.Roles.Any(_r => _r.Role.RoleName == "Admin")).ToList();
             }
-            
+
+            if (key != "")
+                ViewData["key"] = key;
 
             ViewData["pageSize"] = pageSize;
             ViewData["totalItems"] = userList.Count();
@@ -593,7 +600,25 @@ namespace muagicungban.Controllers
             }
         }
 
+        [Authorize]
+        public ActionResult PaymentHistory(string key = "", int page = 1)
+        {
+            User user = membersRepository.Members.Single(m => m.Username == HttpContext.User.Identity.Name);
+            List<PaymentHistory> items = new List<PaymentHistory>();
+            if (user.Roles.Any(r => r.Role.RoleName == "Admin" || r.Role.RoleName == "Manager"))
+               items = paymentsRepository.PaymentHistorys.ToList();
+            else
+               items = paymentsRepository.PaymentHistorys.Where(p => p.Username == HttpContext.User.Identity.Name).ToList();
 
+            if (key != "")
+                ViewData["key"] = key;
+            ViewData["pageSize"] = pageSize;
+            ViewData["totalItems"] = items.Count();
+            ViewData["currentPage"] = page;
+
+            return View(items.Where(i => i.PaidContent.ToLower().Contains(key.ToLower()) || i.Username.ToLower().Contains(key.ToLower())
+                            || i.PaidDate.ToString().Contains(key.ToLower())).Skip((page - 1) * pageSize).Take(pageSize));
+        }
     }
 
 }

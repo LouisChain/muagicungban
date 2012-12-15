@@ -63,7 +63,7 @@
                                         </div>
                                     </fieldset>
                                     <fieldset>
-                                        <legend>Permision</legend>
+                                        <legend>Quyền hạn</legend>
                                         <% List<muagicungban.Entities.UserRoles> _checkedRoles = (List<muagicungban.Entities.UserRoles>)ViewData["roleChecked"];
 
                                            foreach (var item in (List<muagicungban.Entities.Role>)ViewData["roleChkBox"])

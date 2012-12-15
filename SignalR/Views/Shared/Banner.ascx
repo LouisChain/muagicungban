@@ -22,9 +22,10 @@
     </select>
     </form>
 </div>--%>
-
+<% if (ViewData["totalItems"] != null)
+   { %>
 <div class="select_city">
-    <form action="http://<%: Request.Url.Authority %>/item/Search" method="get" id="header-selectcity-form" class="validator">
+    <form action="http://<%: Request.Url.Authority %><%: Request.Url.AbsolutePath %>" method="get" id="header-selectcity-form" class="validator">
     <input type="text" name="key" onkeypress="return PerformClick(event, 'btnSearch');" 
             class="inputbox"
             style = "background:no-repeat;padding:10px 96px 13px 10px;border:none;width:350px; background-color:#FFF;" />
@@ -34,13 +35,34 @@
         <option value="All">Tất cả</option>
         <% foreach (var item in categories)
            { %>
-                <option value="<%: item.ID %>"><%: item.Name%></option>
+                <option value="<%: item.ID %>" ><%: item.Name%></option>
         <% } %>
 	</select>
     <% } %>
     <button onclick="submit" style="padding: 7px 10px 13px; width:100px; background-color:#FFF">Tìm kiếm</button>
     </form>
 </div>
+
+<% } else { %>
+<div class="select_city">
+    <form action="http://<%: Request.Url.Authority %><%: Request.Url.AbsolutePath %>" method="get" id="Form1" class="validator">
+    <input disabled="disabled" type="text" name="key" onkeypress="return PerformClick(event, 'btnSearch');" 
+            class="inputbox"
+            style = "background:no-repeat;padding:10px 96px 13px 10px;border:none;width:350px; background-color:#FFF;" />
+    <% if (categories != null)
+       { %>
+    <select disabled="disabled" name="category" style="padding:10px 10px 10px;width:150px; background-color:#FFF; left:610">
+        <option value="All">Tất cả</option>
+        <% foreach (var item in categories)
+           { %>
+                <option value="<%: item.ID %>" ><%: item.Name%></option>
+        <% } %>
+	</select>
+    <% } %>
+    <button disabled="disabled" style="padding: 7px 10px 13px; width:100px; background-color:#FFF">Tìm kiếm</button>
+    </form>
+</div>
+<% } %>
 
 
 

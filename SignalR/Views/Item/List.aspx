@@ -82,7 +82,10 @@
                                             </td>
                                             <td>
                                                 <%--4--%>
-                                                <%: item.SubCategory.Name %>
+                                                <% if (item.SubCategoryID != 0)
+                                                   { %>
+                                                    <%: item.SubCategory.Name%>
+                                                <% } %>
                                             </td>
                                             <td>
                                                 <%--5--%>
@@ -132,6 +135,6 @@
         <%: Html.PageLinks(new muagicungban.Models.PagingInfo {CurrentPage = (int)ViewData["currentPage"], 
                                                            TotalItems = (int)ViewData["totalItems"], 
                                                            ItemsPerPage = (int)ViewData["pageSize"] },
-        i => Url.Action("List",new {page = i})) %>
+        i => Url.Content(Request.Url.AbsolutePath + "?page=" + i + ((ViewData["key"] != null) ? "&key=" + ViewData["key"] : "") +((ViewData["category"] != null) ? "&category=" + ViewData["category"] : "")))%>
     </div>
 </asp:Content>

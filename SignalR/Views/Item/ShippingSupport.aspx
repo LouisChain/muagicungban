@@ -73,7 +73,7 @@
                                                             <% using (Ajax.BeginForm("GetCountryArea", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "area" }))
                                                                { %>
                                                             <select name="CountryID" id="country" onchange="$(this.form).submit();">
-                                                                <option selected="selected">Select country</option>
+                                                                <option selected="selected">----------------</option>
                                                                 <% foreach (var country in (List<muagicungban.Entities.ShipCountry>)ViewData["Countries"])
                                                                    { %>
                                                                 <option value="<%: country.ShipCountryID %>">

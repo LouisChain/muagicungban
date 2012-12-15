@@ -1,10 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Detail.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<muagicungban.Entities.User>>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Detail.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<muagicungban.Entities.PaymentHistory>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-    List
+	PaymentHistory
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div id="content">
+<div id="content">
         <div class="margin">
             <div class="content-helper clear">
                 <div class="central-column">
@@ -15,22 +16,22 @@
                                     <table cellspacing="0" style="width:100%;font-size:14px;" >
                                         <tr style="text-align:left;background-color:#B4D5B4;height:40px;" >
                                             <th>
-                                                Tên đăng nhập
+                                                #
                                             </th>
                                             <th>
-                                                Họ tên
+                                                Ngày thanh toán
                                             </th>
                                             <th>
-                                                Email
+                                                Thanh toán
                                             </th>
                                             <th>
-                                                Số điện thoại
+                                                Còn lại
                                             </th>
                                             <th align="center">
-                                                Khóa
+                                                Nội dung
                                             </th>
                                             <th align="center">
-                                                Kích hoạt
+                                                Tên tài khoản
                                             </th>
                                         </tr>
                                         <% int j = 0;
@@ -38,43 +39,23 @@
                                             {
                                                 ++j;%>
                                         <tr style="height:30px;<% if (j % 2 == 0) { %> background-color:#EDF0F0; <% } %>">
-                                            <td>
-                                                <%: Html.ActionLink(item.Username, "Edit", new {Username = item.Username}) %>
+                                            <td style="padding-right:5px;">
+                                                <%: item.HistoryID %>
                                             </td>
                                             <td>
-                                                <%: item.Name%>
+                                                <%: item.PaidDate%>
                                             </td>
                                             <td>
-                                                <%: item.Email%>
+                                                <%: item.PaidMoney%>
                                             </td>
                                             <td>
-                                                <%: item.Phone%>
+                                                <%: item.TotalMoney%>
                                             </td>
                                             <td align="center">
-                                                <% using (Ajax.BeginForm("CheckBan/"+item.Username, new AjaxOptions { }))
-                                                   { %>
-                                                    <input type="checkbox" name="isban" value="true" onclick="$(this.form).submit();" <% if (item.IsBan) {%>checked="checked"<% } %> />
-                                                <% } %>
+                                                <%: item.PaidContent %>
                                             </td>
                                             <td align="center">
-                                                <% if (item.IsActive)
-                                                   { %>OK<% }
-                                                   else
-                                                   {%>
-                                                        <% using (Ajax.BeginForm("CheckActive/" + item.Username, new AjaxOptions { OnSuccess = "showActiveSuccess"}))
-                                                           { %>
-                                                            <input id="btnActive" type="submit" value="Kích hoạt" />
-                                                        <% } %>
-                                                        <div id="activemessage" style="display:none;color:Green;">OK</div>
-                                                        <script>
-                                                            var btnactive = document.getElementById("btnActive");
-                                                            var active = document.getElementById("activemessage");
-                                                            function showActiveSuccess() {
-                                                                btnactive.style.display = "none";
-                                                                active.style.display = "block";
-                                                            }
-                                                        </script>
-                                                <% } %>
+                                                <%: item.Username %>
                                             </td>
 
                                         </tr>
@@ -83,8 +64,6 @@
                                             <td colspan="6"></td>
                                         </tr>
                                     </table>
-                                    <p style="text-align:center;font-weight:bolder;font-size:14px;">
-                                        <%: Html.ActionLink("Thêm mới", "Create") %></p>
                                 </div>
                             </div>
                         </div>
@@ -100,3 +79,4 @@
         i => Url.Content(Request.Url.AbsolutePath + "?page=" + i + ((ViewData["key"] != null) ? "&key=" + ViewData["key"] : "") +((ViewData["category"] != null) ? "&category=" + ViewData["category"] : "")))%>
     </div>
 </asp:Content>
+
