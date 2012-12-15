@@ -106,6 +106,14 @@ namespace muagicungban.Controllers
         //
         // GET: /User/Create
 
+        public ActionResult CheckExists(string Username)
+        {
+            if (!membersRepository.Members.Any(m => m.Username == Username))
+                return Content("<span style=\"color:Green;\">Bạn có thể sử dụng tài khoản này</span>");
+            else
+                return Content("<span style=\"color:Red;\">Tên đăng nhập đã có người sử dụng</span>");
+        }
+
         [Authorize]
         public ActionResult Create()
         {
@@ -331,7 +339,7 @@ namespace muagicungban.Controllers
                         userRolesRepository.Add(userRoles);
 
                         // GENERATE EMAIL ACTIVE INFORMATION
-                        string code = Extension.AutoString(10).md5();
+                        string code = Extension.AutoString(10);
                         EmailActive active = new EmailActive();
                         active.Username = user.Username;
                         active.Code = code;
@@ -349,7 +357,7 @@ namespace muagicungban.Controllers
                 }
                 else
                 {
-                    TempData["WrongCaptcha"] = "Wrong captcha value, re enter it";
+                    TempData["WrongCaptcha"] = "Mã xác thực không khớp, vui lòng nhập lại";
                     Register _temp = new Register();
                     _temp.Username = register.Username;
                     _temp.Password = register.Password;
@@ -495,24 +503,97 @@ namespace muagicungban.Controllers
                 if (active.Code == code)
                 {
                     User user = membersRepository.Members.Single(m => m.Username == id);
-                    user.IsActive = true;
-                    membersRepository.Save(user);
+                    if (user != null)
+                    {
+                        user.IsActive = true;
+                        membersRepository.Save(user);
+                        ViewData["message"] = "Kích hoạt thành công, bạn đã có thể thực hiện đăng nhập";
+                    }
+                    else
+                        ViewData["message"] = "Tài khoản không tồn tại trong hệ thống, vui lòng đăng ký";
                     emailActiveRepository.Delete(active);
-                    ViewData["message"] = "Kích hoạt thành công, bạn đã có thể thực hiện đăng nhập";
                     return View("RegisterMessage");
                 }
             }
             else
             {
                 User user = membersRepository.Members.Single(m => m.Username == id);
-                if (user.IsActive)
+                if (user != null && user.IsActive)
                 {
                     ViewData["message"] = "Tài khoản đã được kích hoạt trước đó, bạn không cần kích hoạt nữa";
+                    return View("RegisterMessage");
+                }
+                if (user == null)
+                {
+                    ViewData["message"] = "Tài khoản này không tồn tại trong hệ thống, vui lòng đăng ký";
                     return View("RegisterMessage");
                 }
             }
             return Content("Kích hoạt thất bại!!!");
         }
+
+        [Authorize]
+        public ActionResult Profile()
+        {
+            if (membersRepository.Members.Any(m => m.Username == HttpContext.User.Identity.Name))
+            {
+                User user = membersRepository.Members.Single(m => m.Username == HttpContext.User.Identity.Name);
+
+                return View(user);
+            }
+            else
+                return RedirectToAction("Index","Item");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Profile(FormCollection user)
+        {
+            User mem = membersRepository.Members.Single(m => m.Username == HttpContext.User.Identity.Name);
+            if (user["Name"] != "")
+                mem.Name = user["Name"];
+            if (user["Phone"] != "")
+                mem.Phone = user["Phone"];
+            if (user["Email"] != "")
+                mem.Email = user["Email"];
+            if (user["Address"] != "")
+                mem.Address = user["Address"];
+            if (user["Birthday"] != "")
+                mem.Birthday = DateTime.Parse(user["Birthday"]);
+            if (user["Password"] != "")
+            {
+                if (mem.Password == user["Password"].md5())
+                {
+                    if (user["NewPassword"] != "")
+                    {
+                        if (user["NewPassword"] == user["ConfirmPassword"])
+                        {
+                            mem.Password = user["NewPassword"].md5();
+                        }
+                        else
+                        {
+                            TempData["error-message"] = "Mật khẩu mới và mật khẩu xác thực không khớp, vui lòng nhập lại";
+                            return View(mem);
+                        }
+                    }
+                    membersRepository.Save(mem);
+                    TempData["complete-message"] = "Lưu thành công !!!";
+                    return View(mem);
+                }
+                else
+                {
+                    TempData["error-message"] = "Sai mật khẩu, vui lòng thử lại!!!";
+                    return View(mem);
+                }
+            }
+            else
+            {
+                TempData["error-message"] = "Vui lòng nhập mật khẩu để lưu thay đổi";
+                return View(mem);
+            }
+        }
+
+
     }
 
 }

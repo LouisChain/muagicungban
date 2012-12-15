@@ -215,6 +215,7 @@
     <Content Include="Views\User\Index.aspx" />
     <Content Include="Views\User\List.aspx" />
     <Content Include="Views\User\LogOn.aspx" />
+    <Content Include="Views\User\Profile.aspx" />
     <Content Include="Views\User\Register.aspx" />
     <Content Include="Views\User\RegisterMessage.aspx" />
     <Content Include="Views\User\SignOut.aspx" />
@@ -265,7 +266,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>6640</DevelopmentServerPort>
+          <DevelopmentServerPort>11157</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/muagicungban</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>

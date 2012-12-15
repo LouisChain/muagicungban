@@ -23,7 +23,14 @@
 
 <% if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
    { %>
-        <li class="first-level"><span><a><%:Profile.Name.ToString() %> (<%: Profile.Money.ToString("#,### VND") %>)</a></span></li>
+        <li class="first-level">
+            <span><a><%:Profile.Name.ToString() %> (<%: Profile.Money.ToString("#,### VND") %>)</a></span>
+            <ul class="dropdown-vertical-rtl">
+            <li><a href="http://<%: Request.Url.Authority %>/user/profile" rel="nofollow" class="underlined">Thông tin cá nhân</a></li>
+            <li><a href="/diem-thuong" rel="nofollow">Nạp tài khoản</a></li>
+            <!--li><a href="/diem-thuong" rel="nofollow">Điểm tích lũy:&nbsp;<strong>0</strong></a></li-->
+            </ul>
+        </li>
         <li class="first-level"><span>&nbsp;|&nbsp;</span></li>
         <li class="first-level"><span><a href="http://<%: Request.Url.Authority %>/user/logout">Đăng xuất</a></span></li>
 <% } 
