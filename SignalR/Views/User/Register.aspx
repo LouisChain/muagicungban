@@ -56,6 +56,11 @@
                                                     Email:</label>
                                                 <%: Html.TextBoxFor(model => model.Email, new { style = "width:250px; height:20px;" })%>
                                                 <%: Html.ValidationMessageFor(model => model.Email)%>
+                                                <% if (TempData["email-error"] != null)
+                                                   { %>
+                                                <span class="field-validation-error">
+                                                    <%: TempData["email-error"]%></span>
+                                                <% } %>
                                             </div>
                                             <div class="form-field">
                                                 <label for="password1" class="cm-required cm-password">
@@ -103,6 +108,11 @@
                                                     Điện thoại:</label>
                                                 <%: Html.TextBoxFor(model => model.Phone, new { style = "width:250px; height:20px;" })%>
                                                 <%: Html.ValidationMessageFor(model => model.Phone)%>
+                                                <% if (TempData["phone-error"] != null)
+                                                   { %>
+                                                <span class="field-validation-error"">
+                                                    <%: TempData["phone-error"]%></span>
+                                                <% } %>
                                             </div>
                                             <div class="form-field">
                                                 <p>

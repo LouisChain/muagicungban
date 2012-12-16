@@ -165,6 +165,7 @@ namespace muagicungban.Controllers
                         }
                     User member = new User();
                     member.Username = Username;
+                    
                     member.Name = collection["Name"];
                     member.Password = collection["Password"].md5();
                     member.Phone = collection["Phone"];
@@ -174,6 +175,29 @@ namespace muagicungban.Controllers
                     member.IsActive = true;
                     member.Birthday = DateTime.Parse(collection["Birthday"]);
 
+                    List<Role> roles = new List<Role>();
+                    if (user.Roles.Any(r => r.Role.RoleName == "Manager"))
+                        roles = rolesRepository.Roles.Where(r => r.RoleName != "Admin" && r.RoleName != "Manager").ToList();
+                    if (user.Roles.Any(r => r.Role.RoleName == "Admin"))
+                        roles = rolesRepository.Roles.Where(r => r.RoleName != "Admin").ToList();
+
+                    ViewData["roleChkBox"] = roles;
+
+                    if (membersRepository.Members.Any(m => m.Username == member.Username))
+                    {
+                        TempData["username-error"] = "Tên đăng nhập đã có người sử dụng, vui lòng thử tên khác";
+                        return View(member);
+                    }
+                    if (membersRepository.Members.Any(m => m.Email == member.Email))
+                    {
+                        TempData["email-error"] = "Email đã có người sử dụng, vui lòng thử email khác !!!";
+                        return View(member);
+                    }
+                    if (membersRepository.Members.Any(m => m.Phone == member.Phone))
+                    {
+                        TempData["phone-error"] = "Số điện thoại đã có người sử dụng, vui lòng thử số khác";
+                        return View(member);
+                    }
                     membersRepository.Save(member);
                     userRolesRepository.DeleteAll(userRolesRepository.UserRoles.Where(m => m.UserID == Username).ToList());
                     userRolesRepository.AddAll(userRoles);
@@ -309,6 +333,16 @@ namespace muagicungban.Controllers
                 if (membersRepository.Members.Any(m => m.Username == register.Username))
                 {
                     TempData["username-error"] = "Tài khoản này đã có người sử dụng";
+                    return View(register);
+                }
+                if (membersRepository.Members.Any(m => m.Email == register.Email))
+                {
+                    TempData["email-error"] = "Email đã có người sử dụng, vui lòng thử email khác";
+                    return View(register);
+                }
+                if (membersRepository.Members.Any(m => m.Phone == register.Phone))
+                {
+                    TempData["phone-error"] = "Số điện thoại đã có người sử dụng, vui lòng thử số khác!!!";
                     return View(register);
                 }
                 if (register.Captcha == HttpContext.Session["captchastring"].ToString())

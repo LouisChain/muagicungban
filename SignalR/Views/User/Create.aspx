@@ -38,6 +38,11 @@
                                                 Tên đăng nhập</label>
                                             <%: Html.TextBoxFor(model => model.Username) %>
                                             <%: Html.ValidationMessageFor(model => model.Username) %>
+                                            <% if (TempData["username-error"] != null)
+                                                   { %>
+                                                <span class="field-validation-error" style="color:Red;">
+                                                    <%: TempData["username-error"]%></span>
+                                                <% } %>
                                         </div>
                                         <div class="form-field">
                                             <label>
@@ -56,12 +61,22 @@
                                                 Email</label>
                                             <%: Html.TextBoxFor(model => model.Email) %>
                                             <%: Html.ValidationMessageFor(model => model.Email) %>
+                                            <% if (TempData["email-error"] != null)
+                                                   { %>
+                                                <span class="field-validation-error" style="color:Red;">
+                                                    <%: TempData["email-error"]%></span>
+                                                <% } %>
                                         </div>
                                         <div class="form-field">
                                             <label>
                                                 Số điện thoại</label>
                                             <%: Html.TextBoxFor(model => model.Phone) %>
                                             <%: Html.ValidationMessageFor(model => model.Phone) %>
+                                            <% if (TempData["phone-error"] != null)
+                                                   { %>
+                                                <span class="field-validation-error" style="color:Red;">
+                                                    <%: TempData["phone-error"]%></span>
+                                                <% } %>
                                         </div>
                                         <div class="form-field">
                                             <label>

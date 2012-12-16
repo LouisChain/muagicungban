@@ -31,17 +31,25 @@
                                         <%: Html.ValidationMessageFor(model => model.Password) %>
                                     </div>
                                     <div class="form-field">
-                                    
+                                    <table style="font-size:16px;">
+                                    <tr>
+                                    <td style="width:140px;">
                                     <%: Html.CheckBoxFor(model => model.RememberMe) %>
-                                        Ghi nhớ trạng thái đăng nhập
+                                        Ghi nhớ
                                     <%: Html.ValidationMessageFor(model => model.RememberMe) %>
-
+                                    </td>
+                                    <td style="color:Green;font-weight:bold;">
+                                        <%: Html.ActionLink("Quên mật khẩu", "ForgetPassword") %>
+                                    </td>
+                                    </tr>
+                                    </table>
                                     </div>
                                     <div class="form-field">
 
                                             <span class="button-submit">
                                                 <input type="submit" value="Đăng nhập" /></span>
                                     </div>
+
                                     <% } %>
                                 </div>
                             </div>
