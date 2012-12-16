@@ -15,7 +15,7 @@
                                     <div class="central-content">
                                         <div class="box_product_detail">
                                         <h1 style="padding-left:30px;">QUẢN LÝ DANH MỤC SẢN PHẨM</h1>
-                                            <table style="position:absolute;padding-top:20px;padding-left:50px;font-size:16px;">
+                                            <table style="padding-top:20px;padding-bottom:30px;padding-left:50px;font-size:16px;">
                                                 <tr style="height:30px;background-color:Black;color:White;">
                                                     <th style="width:190px;">
                                                         Danh mục
