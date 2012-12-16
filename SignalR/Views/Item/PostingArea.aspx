@@ -52,7 +52,7 @@
                                                             
                                                         </tr>
                                                         <% int j = 0;
-                                                           foreach (var place in (List<muagicungban.Entities.ShowablePlace>)ViewData["showable_place"])
+                                                           foreach (var place in ((List<muagicungban.Entities.ShowablePlace>)ViewData["showable_place"]).Where(p => p.PlaceName != "basic"))
                                                            { j++;%>
                                                             <tr <% if (j % 2 == 0) { %> style="background-color: #DAEBDC;" <% } %>>
                                                                 <td><%: place.PlaceName%></td>
