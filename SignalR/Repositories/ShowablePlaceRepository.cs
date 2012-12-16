@@ -17,5 +17,17 @@ namespace muagicungban.Repositories
         }
 
         public IQueryable<ShowablePlace> ShowablePlaces { get { return showablePlaceTable; } }
+
+        public void Save(ShowablePlace item)
+        {
+            if (showablePlaceTable.Any(s => s.PlaceName == item.PlaceName))
+            {
+                ShowablePlace _temp = showablePlaceTable.Single(s => s.PlaceName == item.PlaceName);
+                _temp.PricePerDay = item.PricePerDay;
+                _temp.NumberOfItems = item.NumberOfItems;
+                _temp.PlaceDescription = item.PlaceDescription;
+                showablePlaceTable.Context.SubmitChanges();
+            }
+        }
     }
 }

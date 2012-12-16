@@ -91,6 +91,7 @@
     <Compile Include="Abstract\ISubCategoriesRepository.cs" />
     <Compile Include="App_Start\RegisterHubs.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\ShowablePlaceController.cs" />
     <Compile Include="Entities\AccountRecharge.cs" />
     <Compile Include="Entities\EmailActive.cs" />
     <Compile Include="Entities\Order.cs" />
@@ -210,6 +211,8 @@
     <Content Include="Views\Shared\Banner.ascx" />
     <Content Include="Views\Shared\Menu.ascx" />
     <Content Include="Views\Shared\SubMenu.ascx" />
+    <Content Include="Views\ShowablePlace\Index.aspx" />
+    <Content Include="Views\ShowablePlace\List.aspx" />
     <Content Include="Views\SubCategory\Create.aspx" />
     <Content Include="Views\SubCategory\Edit.aspx" />
     <Content Include="Views\SubCategory\List.aspx" />
