@@ -749,6 +749,35 @@ namespace muagicungban.Controllers
             return View();
 
         }
+
+        public ActionResult ForgetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ForgetPassword(string email)
+        {
+            if (membersRepository.Members.Any(m => m.Email == email))
+            {
+                string password = Extension.AutoString(8);
+                string message = "Thông tin đăng nhập muagicungban.vn <br>"
+                                + "Tên đăng nhập: " + membersRepository.Members.Single(m => m.Email == email).Username + "<br>"
+                                + "Mật khẩu mới: " + password;
+                Extension.SendEmail(email, "Phục hồi mật khẩu đăng nhập", message);
+                TempData["error-message"] = "Hệ thống đã gửi email phục hồi mật khẩu cho bạn, vui lòng kiểm tra .";
+                User user = membersRepository.Members.Single(m => m.Email == email);
+                user.Password = password.md5();
+                membersRepository.Save(user);
+                return View();
+            }
+            else
+            {
+                TempData["error-message"] = "Email không tồn tại trong hệ thống, vui lòng kiểm tra lại!!!";
+                return View();
+            }
+        }
+
     }
 
 }

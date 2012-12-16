@@ -215,6 +215,7 @@
     <Content Include="Views\SubCategory\List.aspx" />
     <Content Include="Views\User\Create.aspx" />
     <Content Include="Views\User\Edit.aspx" />
+    <Content Include="Views\User\ForgetPassword.aspx" />
     <Content Include="Views\User\Index.aspx" />
     <Content Include="Views\User\List.aspx" />
     <Content Include="Views\User\LogOn.aspx" />
