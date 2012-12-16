@@ -35,5 +35,9 @@ namespace muagicungban.Entities
         EntityRef<ShowablePlace> _place;
         [Association(ThisKey = "PlaceName", Storage = "_place")]
         public ShowablePlace Place { get { return _place.Entity; } }
+
+        EntityRef<Item> _item;
+        [Association(ThisKey = "ItemID", OtherKey = "ItemID", Storage = "_item")]
+        public Item Item { get { return _item.Entity; } }
     }
 }

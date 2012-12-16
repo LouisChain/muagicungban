@@ -58,12 +58,12 @@
                                                 <%: Html.ValidationMessageFor(model => model.Email) %>
                                             </div>
                                             <div class="form-field">
-                                                <label for="password1" class="cm-required cm-password">
+                                                <label for="password1" class="cm-password">
                                                     Mật khẩu mới:</label>
                                                 <input type="password" name="NewPassword" style="width:250px; height:20px;" />
                                             </div>
                                             <div class="form-field">
-                                                <label for="password1" class="cm-required cm-password">
+                                                <label for="password1" class="cm-password">
                                                     Mật khẩu mới lần nữa:</label>
                                                 <input type="password" name="ConfirmPassword" style="width:250px; height:20px;" />
                                             </div>

@@ -677,9 +677,8 @@ namespace muagicungban.Controllers
             {
                 Item item = new Item();
                 item.ItemID = model.ItemID;
-                item.IsActive = false;
-                item.IsSold = false;
-                item.IsChecked = false;
+                item = itemsRepository.Items.Single(i => i.ItemID == item.ItemID);
+
                 item.IsAuction = model.IsAuction;
                 item.Title = model.Title;
                 item.Description = model.Description;
@@ -705,9 +704,17 @@ namespace muagicungban.Controllers
                     item.ImageData = new byte[image.ContentLength];
                     image.InputStream.Read(item.ImageData, 0, image.ContentLength);
                 }
-                itemsRepository.Save(item);
+                    if (item.IsChecked)
+                    {
+                        ModelState.AddModelError("", "Sản phẩm đã qua kiểm duyệt, bạn không còn được phép sửa đổi thông tin");
+                        return View(model);
+                    }
+                    else
+                        itemsRepository.Save(item);
 
-                return RedirectToAction("ShippingSupport", new { ItemId = item.ItemID });
+                    return RedirectToAction("ShippingSupport", new { ItemId = item.ItemID });
+
+                
             }
             else
             {

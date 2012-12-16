@@ -90,6 +90,7 @@
     <Compile Include="Abstract\IShipCountryRepository.cs" />
     <Compile Include="Abstract\ISubCategoriesRepository.cs" />
     <Compile Include="App_Start\RegisterHubs.cs" />
+    <Compile Include="Controllers\ItemPlaceController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ShowablePlaceController.cs" />
     <Compile Include="Entities\AccountRecharge.cs" />
@@ -190,6 +191,8 @@
     <Content Include="Views\Category\List.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Image\Create.aspx" />
+    <Content Include="Views\ItemPlace\Index.aspx" />
+    <Content Include="Views\Item\ItemMenu.ascx" />
     <Content Include="Views\Item\Category.aspx" />
     <Content Include="Views\Item\ConfirmAndPayment.aspx" />
     <Content Include="Views\Item\Create.aspx" />
@@ -197,7 +200,7 @@
     <Content Include="Views\Item\Edit.aspx" />
     <Content Include="Views\Item\EditItem.aspx" />
     <Content Include="Views\Item\Index.aspx" />
-    <Content Include="Views\Item\ItemMenu.ascx" />
+    <Content Include="Views\ItemPlace\ItemPlaceMenu.ascx" />
     <Content Include="Views\Item\ItemSummary.ascx" />
     <Content Include="Views\Item\Item_Top1.ascx" />
     <Content Include="Views\Item\List.aspx" />

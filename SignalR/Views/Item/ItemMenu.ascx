@@ -27,7 +27,9 @@
             <li style="font-size: 14px; padding: 6px 3px 4px; min-width: auto;"><a href="http://<%: Request.Url.Authority %>/subcategory/list"
                 style="width: 190px; min-width: 0; padding: 2px 2px; <% if ((string)ViewData["type"] =="buy") { %>background-color: #1ECA17;
                 <% } %>">QUẢN LÝ DANH MỤC <span class="total">(<%: ((List<muagicungban.Models.SubCategory>)ViewData["categories"]).Count%>)</span></a></li>
-
+            <li style="font-size: 14px; padding: 6px 3px 4px; min-width: auto;"><a href="http://<%: Request.Url.Authority %>/itemplace/"
+                style="width: 190px; min-width: 0; padding: 2px 2px; <% if ((string)ViewData["type"] =="buy") { %>background-color: #1ECA17;
+                <% } %>">QUẢN LÝ ĐĂNG TIN <span class="total"></span></a></li>
             <% }
                else
                {
