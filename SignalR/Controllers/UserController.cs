@@ -428,43 +428,48 @@ namespace muagicungban.Controllers
         [HttpPost]
         public ActionResult LogOn(LogOn model, string returnUrl)
         {
-            User member = membersRepository.Members.Single(m => m.Username == model.Username);
-            if (ModelState.IsValid)
+            if (membersRepository.Members.Any(m => m.Username == model.Username))
             {
-                if (!membersRepository.Members.Any(m => m.Username == model.Username && m.Password == model.Password.md5()))
-                    ModelState.AddModelError("", "Thông tin đăng nhập không đúng.!!!");
-                else if (!member.IsActive)
+                User member = membersRepository.Members.Single(m => m.Username == model.Username);
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("", "Tài khoản đang chờ được kích hoạt, Vui lòng kích hoạt..!!!");
-                }
-                else if (member.IsBan)
-                {
-                    ModelState.AddModelError("", "Tài khoản của bạn đã bị khóa, liên hệ admin để biết thêm.!!!");
-                }                
-                else
-                {
+                    if (!membersRepository.Members.Any(m => m.Username == model.Username && m.Password == model.Password.md5()))
+                        ModelState.AddModelError("", "Thông tin đăng nhập không đúng.!!!");
+                    else if (!member.IsActive)
+                    {
+                        ModelState.AddModelError("", "Tài khoản đang chờ được kích hoạt, Vui lòng kích hoạt..!!!");
+                    }
+                    else if (member.IsBan)
+                    {
+                        ModelState.AddModelError("", "Tài khoản của bạn đã bị khóa, liên hệ admin để biết thêm.!!!");
+                    }
+                    else
+                    {
 
-                    FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
-                    HttpContext.Session.Add("Roles", member.Roles);
-                    HttpContext.Session.Add("Profile", member);
+                        FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
+                        HttpContext.Session.Add("Roles", member.Roles);
+                        HttpContext.Session.Add("Profile", member);
 
-                    // For showing number of win items
-                    int i = 0;
-                    foreach (var item in itemsRepository.Items.Where(a => a.EndDate < DateTime.Now))
-                        if (item.CurUser == model.Username)
-                            i++;
-                    HttpContext.Session.Add("Win", i);
+                        // For showing number of win items
+                        int i = 0;
+                        foreach (var item in itemsRepository.Items.Where(a => a.EndDate < DateTime.Now))
+                            if (item.CurUser == model.Username)
+                                i++;
+                        HttpContext.Session.Add("Win", i);
 
-                    // For showing number of join items
-                    i = 0;
-                    foreach (var item in itemsRepository.Items)
-                        if (item.Bids.Any(b => b.BidderID == model.Username))
-                            i++;
-                    HttpContext.Session.Add("Join", i);
+                        // For showing number of join items
+                        i = 0;
+                        foreach (var item in itemsRepository.Items)
+                            if (item.Bids.Any(b => b.BidderID == model.Username))
+                                i++;
+                        HttpContext.Session.Add("Join", i);
 
-                    return Redirect(returnUrl ?? Url.Action("Index", "Item"));
+                        return Redirect(returnUrl ?? Url.Action("Index", "Item"));
+                    }
                 }
             }
+            else
+                ModelState.AddModelError("", "Tài khoản đăng nhập không tồn tại.!!!");
             return View(model);
         }
 

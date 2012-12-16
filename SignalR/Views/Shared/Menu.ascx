@@ -24,7 +24,8 @@
 <% if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
    { %>
         <li class="first-level">
-            <span><a><%:Profile.Name.ToString() %> (<%: Profile.Money.ToString("#,### VND") %>)</a></span>
+            <span><a><%:Profile.Name.ToString() %> <% if (Roles.Any(r => r.Role.RoleName == "Seller"))
+                                                      { %>(<%: Profile.Money.ToString("#,### VND")%>) <% } %></a></span>
             <ul class="dropdown-vertical-rtl">
             <li><a href="http://<%: Request.Url.Authority %>/user/profile" rel="nofollow" class="underlined">Thông tin cá nhân</a></li>
             <li><a href="http://<%: Request.Url.Authority %>/user/paymenthistory" rel="nofollow">Lịch sử thanh toán</a></li>
