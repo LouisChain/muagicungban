@@ -45,10 +45,6 @@
                                             </th>
                                             <%--7--%>
                                             <th>
-                                                Đã bán
-                                            </th>
-                                            <%--8--%>
-                                            <th>
                                                 Đã kiểm duyệt
                                             </th>
                                             <%--9--%>
@@ -102,13 +98,6 @@
                                             <td align="center">
                                                 <%--7--%>
                                                 <% if (item.IsActive)
-                                                   { %>OK<% }
-                                                   else
-                                                   { %>Chưa<% } %>
-                                            </td>
-                                            <td align="center">
-                                                <%--8--%>
-                                                <% if (item.IsSold)
                                                    { %>OK<% }
                                                    else
                                                    { %>Chưa<% } %>
