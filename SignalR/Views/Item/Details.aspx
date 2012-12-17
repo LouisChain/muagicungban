@@ -36,6 +36,7 @@
              showCurrentPrice<%: Model.ItemID %>.innerHTML = showprice;
              //currentUser<%: Model.ItemID %>.value = user;
              //alert(currentUser<%: Model.ItemID %>.value);
+             //if ( bidsHistory[0] < 14 ) bidsHistory[0] += 1;
              for (var i = bidsHistory[0]; i > 1; i--)
              {
                 bidsHistory[i].innerHTML = bidsHistory[i-1].innerHTML;
@@ -200,7 +201,11 @@
                                                                     <%: _bid.DatePlace.ToString("dd/MM/yyyy hh:mm") %>
                                                                 </td>
                                                             </tr>
-                                                            <% } 
+                                                            <% }
+                                                                while (i < 14)
+                                                                { %>
+                                                                    <tr id="bHis<%: ++i %>"></tr>
+                                                              <%}
                                                         i = 0; %>
                                                         </tbody>
                                                     </table>
@@ -208,7 +213,11 @@
                                                     <% foreach (var _bid in bids)
                                                        { %>
                                                         bidsHistory[<%: ++i %>] = document.getElementById("bHis<%: _bid.BidID %>");
-                                                    <% } %>
+                                                    <% }  
+                                                    while (i < 14)
+                                                    { %>
+                                                        bidsHistory[<%: ++i %>] = document.getElementById("bHis<%: i %>");
+                                                    <%}%>
                                                     bidsHistory[0] = <%: i %>;
                                                     </script>
                                                 </div>
