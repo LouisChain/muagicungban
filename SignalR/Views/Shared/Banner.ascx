@@ -2,8 +2,8 @@
 <% var categories = (List<muagicungban.Models.SubCategory>)ViewData["categories"]; %>
 <div class="logo-image">
     <a href="http://<%: Request.Url.Authority %>/">
-        <img src="http://www.hotdeal.vn/skins/hotdeal/customer/images/logo-hotdeal.png" width="182" height="74" 
-        border="0" alt="HotDeal.vn: Mua hàng theo nhóm, cùng mua chung để có giá ưu đãi"></a>
+        <img src="http://<%: Request.Url.Authority %>/content/images/logo.png" width="182" height="74" 
+        border="0" alt="Trang chủ muagicungban.vn"></a>
 </div>
 <%--<div class="select_city">
     <span>Chọn thành phố</span>
