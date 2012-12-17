@@ -72,7 +72,7 @@
     });
     </script>
     <div id="messages" style="display: none; z-index: 5; float: left; position: fixed;
-        left: 30%; right: 20%; bottom: 40px; border-width: 3px; border-top-left-radius: 40px;
+        left: 30%; right: 20%; bottom: 70px; border-width: 3px; border-top-left-radius: 40px;
         border-top-right-radius: 40px; border-bottom-right-radius: 40px; border-bottom-left-radius: 40px;
         groove rgb(9, 231, 222); font-size: 19px; background-color: rgb(27, 143, 138);
         color: rgb(255, 255, 255); border-color: #DD1F1F; width: 50%; height: 50px; text-align: center;

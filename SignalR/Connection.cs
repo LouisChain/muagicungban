@@ -7,6 +7,6 @@ namespace muagicungban
 {
     public class Connection
     {
-        public static string connectionString = @"Data Source=.\sqlexpress;Initial Catalog=muagicungban;Integrated Security=True;Pooling=False";
+        public static string connectionString = @"workstation id=muagicungban.mssql.somee.com;packet size=4096;user id=muagicungban_SQLLogin_1;pwd=jw5jva7cje;data source=muagicungban.mssql.somee.com;persist security info=False;initial catalog=muagicungban";
     }
 }

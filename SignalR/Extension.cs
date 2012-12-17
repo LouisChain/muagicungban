@@ -18,8 +18,8 @@ namespace muagicungban
 
         public static void SendEmail(string address, string subject, string message)
         {
-            string email = "muagicungban.vn@gmail.com";
-            string password = "@%@%!#@%";
+            string email = "webmuagicungban@gmail.com";
+            string password = "abc123!@#@5@5!3@5";
 
             var loginInfo = new NetworkCredential(email, password);
             var msg = new MailMessage();

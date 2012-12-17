@@ -43,19 +43,3 @@ H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\bin\System.Web.Mvc.xml
 H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\obj\Debug\ResolveAssemblyReference.cache
 H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\obj\Debug\SignalR.dll
 H:\Documents\SGU\ECommerce\Project\muagicungban\SignalR\obj\Debug\SignalR.pdb
-D:\Learning Corner\E-Commerce\Project\muagicungban\SignalR\bin\SignalR.dll
-D:\Learning Corner\E-Commerce\Project\muagicungban\SignalR\bin\SignalR.pdb
-D:\Learning Corner\E-Commerce\Project\muagicungban\SignalR\bin\Microsoft.AspNet.SignalR.Core.dll
-D:\Learning Corner\E-Commerce\Project\muagicungban\SignalR\bin\Microsoft.AspNet.SignalR.Hosting.AspNet.dll
-D:\Learning Corner\E-Commerce\Project\muagicungban\SignalR\bin\Microsoft.AspNet.SignalR.Hosting.Common.dll
-D:\Learning Corner\E-Commerce\Project\muagicungban\SignalR\bin\Newtonsoft.Json.dll
-D:\Learning Corner\E-Commerce\Project\muagicungban\SignalR\bin\System.Data.Linq.dll
-D:\Learning Corner\E-Commerce\Project\muagicungban\SignalR\bin\System.Web.Mvc.dll
-D:\Learning Corner\E-Commerce\Project\muagicungban\SignalR\bin\Microsoft.AspNet.SignalR.Core.xml
-D:\Learning Corner\E-Commerce\Project\muagicungban\SignalR\bin\Microsoft.AspNet.SignalR.Hosting.AspNet.xml
-D:\Learning Corner\E-Commerce\Project\muagicungban\SignalR\bin\Microsoft.AspNet.SignalR.Hosting.Common.xml
-D:\Learning Corner\E-Commerce\Project\muagicungban\SignalR\bin\Newtonsoft.Json.xml
-D:\Learning Corner\E-Commerce\Project\muagicungban\SignalR\bin\System.Web.Mvc.xml
-D:\Learning Corner\E-Commerce\Project\muagicungban\SignalR\obj\Debug\ResolveAssemblyReference.cache
-D:\Learning Corner\E-Commerce\Project\muagicungban\SignalR\obj\Debug\SignalR.dll
-D:\Learning Corner\E-Commerce\Project\muagicungban\SignalR\obj\Debug\SignalR.pdb

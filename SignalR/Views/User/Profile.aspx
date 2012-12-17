@@ -12,8 +12,8 @@
                 monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
                 changeMonth: true,
                 changeYear: true,
-                dateFormat: 'dd/mm/yy',
-                yearRange: '1950:2000'
+                dateFormat: 'mm/dd/yy',
+                yearRange: '1960:2000'
             }
         );
         });

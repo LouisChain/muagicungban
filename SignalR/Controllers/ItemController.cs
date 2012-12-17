@@ -60,6 +60,7 @@ namespace muagicungban.Controllers
             // For showing number of future item
             ViewData["FutureNums"] = itemsRepository.Items.Where(j => DateTime.Now < j.StartDate && j.IsActive && j.IsChecked && !j.Owner.IsBan).Count();
 
+            
         }
 
         //

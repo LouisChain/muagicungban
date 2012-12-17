@@ -18,7 +18,7 @@
         second -= minutes * 60;
         second = Math.ceil(second);
         if (totalSecond >= 0) {
-            tdiv.innerHTML = days + "days " + leadingZero(hours) + ":" + leadingZero(minutes) + ":" + leadingZero(second);
+            tdiv.innerHTML = days + "ngày " + leadingZero(hours) + ":" + leadingZero(minutes) + ":" + leadingZero(second);
         }
         else { clearInterval(to); }
     };
@@ -55,7 +55,7 @@ function countDown1(runTime, divid) {
         second -= minutes * 60;
         second = Math.ceil(second);
         if (totalSecond >= 0) {
-            tdiv.innerHTML = "<span>" + days + "</span> days <br><br><span>" + leadingZero(hours) + "</span>:<span>" + leadingZero(minutes) + "</span>:<span>" + leadingZero(second) + "</span>";
+            tdiv.innerHTML = "<span>" + ngày + "</span> days <br><br><span>" + leadingZero(hours) + "</span>:<span>" + leadingZero(minutes) + "</span>:<span>" + leadingZero(second) + "</span>";
         }
         else { clearInterval(to); }
     };
