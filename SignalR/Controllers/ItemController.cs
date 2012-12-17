@@ -535,7 +535,7 @@ namespace muagicungban.Controllers
             //DateTime postingDate = DateTime.Now;
             //return Content(collection["id"]);
             DateTime postingDate = itemPlaces.getShowingDate(collection["id"]);
-            return Content(postingDate.ToString("dd/MM/yyyy hh:mm:ss"));
+            return Content(postingDate.ToString("MM/dd/yyyy hh:mm:ss"));
         }
 
         public ActionResult SavePostingPlace(FormCollection collection)
